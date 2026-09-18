@@ -1,0 +1,15 @@
+{
+  "cases": 100,
+  "g4_photons_per_case": 100000,
+  "g4_total_photons": 10000000,
+  "mean_direct_z": 0.4301430384019577,
+  "rms_direct_z": 1.0107500578003967,
+  "mean_rayleigh_z": 0.11922763889014294,
+  "rms_rayleigh_z": 0.8740538739445679,
+  "pooled_q_reduced_chi2": 0.9011717481312983,
+  "q_compared_bins": 219,
+  "direct_relative_bias_percent": 0.29705564957258623,
+  "rayleigh_relative_bias_percent": 0.27926666388051746,
+  "g4_roots_retained": 0,
+  "physics_scope": "direct and exactly-one-Rayleigh only"
+}

@@ -1,0 +1,33 @@
+# Reproduce colleague water profile: 40 mm water, 500 mm entrance-plane distance.
+/random/setSeeds 404027 220221
+/det/setCustomMatDensity 1.0000000000
+/det/setCustomMatHmassfract 0.1119000000
+/det/setCustomMatCmassfract 0.0000000000
+/det/setCustomMatNmassfract 0.0000000000
+/det/setCustomMatOmassfract 0.8881000000
+/det/SetCustomMatFF data/keele_water.dat
+/det/setPhantomMaterial 30
+/det/setPhantomBox true
+/det/setPhantomDiameter 40. mm
+/det/setPhantomHeight 120. mm
+/det/setPhantomZ 100. mm
+/det/setSlits false
+/det/setDetectorSize 339.411255 mm
+/det/setDetectorThickness 0.3 mm
+/det/setDetectorSampleDistance 480.15 mm
+/phys/SelectPhysicsList empenelopeMI
+/run/setCut 0.01 mm
+/run/verbose 1
+/run/initialize
+/run/setfilenamesave results/water_colleague_40mm_10m
+/sd/setSK true
+/gps/particle gamma
+/gps/ene/type Mono
+/gps/ene/mono 22.0220601 keV
+/gps/pos/type Plane
+/gps/pos/shape Circle
+/gps/pos/radius 0.05 mm
+/gps/pos/centre 0. 0. 0. mm
+/gps/direction 0 0 1
+/run/printProgress 1000000
+/run/beamOn 10000000

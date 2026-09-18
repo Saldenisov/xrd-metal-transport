@@ -1,0 +1,14 @@
+# Interactive Keele tutorial geometry.
+/det/setComp0 0.20
+/det/setComp1 0.70
+/det/setComp2 0.10
+/det/setComp3 0.00
+/det/setPhantomMaterial 2
+/det/setPhantomDiameter 10. mm
+/det/setPhantomHeight 1. mm
+/det/setPhantomZ 500. mm
+/det/setThetaSetup 0.0
+/det/setSlits false
+/det/setDetectorSize 300. mm
+/det/setDetectorThickness 1. mm
+/det/setDetectorSampleDistance 500. mm

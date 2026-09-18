@@ -1,0 +1,34 @@
+# Exactly 100M incident Ag K-alpha1 photons.
+# Same 50 mm breast mixture, 100 um beam, 1000 x 1000 ideal detector, 120 mm gap.
+/random/setSeeds 707107 866025
+/det/setCustomMatDensity 0.9794738076
+/det/setCustomMatHmassfract 0.1074785105
+/det/setCustomMatCmassfract 0.4680700880
+/det/setCustomMatNmassfract 0.0189646254
+/det/setCustomMatOmassfract 0.4054867761
+/det/SetCustomMatFF data/keele_breast_g50.dat
+/det/setPhantomMaterial 30
+/det/setPhantomBox true
+/det/setPhantomDiameter 50. mm
+/det/setPhantomHeight 120. mm
+/det/setPhantomZ 100. mm
+/det/setSlits false
+/det/setDetectorSize 141.421356 mm
+/det/setDetectorThickness 0.3 mm
+/det/setDetectorSampleDistance 145.15 mm
+/phys/SelectPhysicsList empenelopeMI
+/run/setCut 0.01 mm
+/run/verbose 1
+/run/initialize
+/run/setfilenamesave results/keele_breast_g50_1000px_ag_ka1_100m
+/sd/setSK true
+/gps/particle gamma
+/gps/ene/type Mono
+/gps/ene/mono 22.162917 keV
+/gps/pos/type Plane
+/gps/pos/shape Circle
+/gps/pos/radius 0.05 mm
+/gps/pos/centre 0. 0. 0. mm
+/gps/direction 0 0 1
+/run/printProgress 5000000
+/run/beamOn 100000000

@@ -1,0 +1,11 @@
+{
+  "incident_photons_per_backend": 3000000,
+  "g4_direct": 248894,
+  "metal_direct": 249261,
+  "g4_single_rayleigh": 36717,
+  "metal_single_rayleigh": 36472,
+  "g4_other_detected": 18952,
+  "q_reduced_chi2_independent_samples": 1.0362692737471306,
+  "q_compared_bins": 207,
+  "important_limit": "Metal does not transport Compton or multiple collisions; only direct and exactly-one-Rayleigh channels are compared."
+}

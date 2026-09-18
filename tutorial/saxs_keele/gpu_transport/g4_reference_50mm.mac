@@ -1,0 +1,34 @@
+# Independent Geant4 reference for the Metal single-Rayleigh feasibility test.
+# Run from build/saxs_keele; FF paths are relative to that directory.
+/random/setSeeds 550071 770053
+/det/setCustomMatDensity 0.9794738076
+/det/setCustomMatHmassfract 0.1074785105
+/det/setCustomMatCmassfract 0.4680700880
+/det/setCustomMatNmassfract 0.0189646254
+/det/setCustomMatOmassfract 0.4054867761
+/det/SetCustomMatFF data/keele_breast_g50.dat
+/det/setPhantomMaterial 30
+/det/setPhantomBox true
+/det/setPhantomDiameter 50. mm
+/det/setPhantomHeight 120. mm
+/det/setPhantomZ 100. mm
+/det/setSlits false
+/det/setDetectorSize 141.421356 mm
+/det/setDetectorThickness 0.3 mm
+/det/setDetectorSampleDistance 135.15 mm
+/phys/SelectPhysicsList empenelopeMI
+/run/setCut 0.01 mm
+/run/verbose 0
+/run/initialize
+/run/setfilenamesave results/gpu_metal_reference_50mm
+/sd/setSK true
+/gps/particle gamma
+/gps/ene/type Mono
+/gps/ene/mono 22.162917 keV
+/gps/pos/type Plane
+/gps/pos/shape Circle
+/gps/pos/radius 0.100 mm
+/gps/pos/centre 0. 0. 74.900 mm
+/gps/ang/type focused
+/gps/ang/focuspoint 0. 0. 395.100 mm
+/run/beamOn 3000000

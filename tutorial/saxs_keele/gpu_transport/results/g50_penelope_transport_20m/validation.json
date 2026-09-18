@@ -1,0 +1,44 @@
+{
+  "photons": 20000000,
+  "g4_threads": 14,
+  "mass_fractions_water_fat_collagen": null,
+  "added_unknown_residual_peak": false,
+  "g4_seconds_wall": 37.337389874999644,
+  "metal_seconds_wall": 0.1502097919874359,
+  "metal_seconds_transport_and_reduction": 0.10270607471466064,
+  "metal_kernel_seconds": 0.0601400000450667,
+  "wall_speedup": 248.5682816079173,
+  "transport_speedup_excluding_metal_startup": 363.5363339386776,
+  "g4_counts": {
+    "direct": 1661539,
+    "single_rayleigh": 244111,
+    "multiple_rayleigh": 20445,
+    "compton": 105906
+  },
+  "metal_counts": [
+    1663707,
+    244471,
+    20337,
+    106173,
+    0,
+    15509080,
+    2456232,
+    0
+  ],
+  "channel_relative_difference": {
+    "direct": 0.0013048143919582866,
+    "single_rayleigh": 0.0014747389507232533,
+    "multiple_rayleigh": -0.005282465150403537,
+    "compton": 0.0025211036201915338
+  },
+  "g4_detector_total": 2032001,
+  "metal_detector_total": 2034688,
+  "radial_relative_rms_2_to_28_nm_inv": 0.050897482439897196,
+  "radial_mean_relative_bias_2_to_28_nm_inv": 0.004384553324620428,
+  "roots_retained": 0,
+  "not_yet_geant4_equivalent": [
+    "photoelectric fluorescence",
+    "Rayleigh CDF sampling is approximate rather than Geant4 RITA",
+    "detector response"
+  ]
+}

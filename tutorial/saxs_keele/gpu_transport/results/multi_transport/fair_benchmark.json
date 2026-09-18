@@ -1,0 +1,10 @@
+{
+  "photons": 20000000,
+  "g4_threads": 8,
+  "g4_image_only_csv_wall_seconds": 42.338493624993134,
+  "metal_image_raw_wall_seconds": 0.10572091600624844,
+  "speedup_wall": 400.4741466909991,
+  "metal_transport_and_histogram_seconds": 0.06621706485748291,
+  "root_files_retained": 0,
+  "caveat": "Geant4 CSV and Metal raw have different serialization costs; both timings include process startup and complete detector-image transport"
+}

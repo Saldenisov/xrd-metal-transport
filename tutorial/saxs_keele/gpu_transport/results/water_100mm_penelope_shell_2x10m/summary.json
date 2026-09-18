@@ -1,0 +1,120 @@
+{
+  "geometry": {
+    "detector_pixels": 1000,
+    "pixel_pitch_um": 100.0,
+    "sample_thickness_mm": 100.0,
+    "front_face_to_detector_mm": 200.0,
+    "mean_scattering_plane_to_detector_mm": 150.0,
+    "energy_kev": 22.0220601,
+    "q_range_nm_inv": [
+      1.0,
+      30.0
+    ],
+    "radial_points": 200
+  },
+  "beam_diameter_um": 100.0,
+  "beam_direction": "parallel",
+  "upstream_air_mm": 0.1,
+  "downstream_air_mm": 100.0,
+  "incident_photons_per_backend": 20000000,
+  "repetitions": 2,
+  "individual_runs": [
+    {
+      "run": 0,
+      "incident_photons_per_backend": 10000000,
+      "geant4_seconds": 16.843769625003915,
+      "metal_seconds": 0.11059845899580978,
+      "geant4_channels": [
+        14406,
+        4034,
+        683,
+        1777
+      ],
+      "metal_channels": [
+        13987,
+        4087,
+        666,
+        1843
+      ],
+      "metal_history_seed": 800053,
+      "metal_air_interaction_hits": 21,
+      "profile_integrated_cpu": 4354.000000258806,
+      "profile_integrated_gpu": 4457.000000903679
+    },
+    {
+      "run": 1,
+      "incident_photons_per_backend": 10000000,
+      "geant4_seconds": 17.265475499996683,
+      "metal_seconds": 0.10449058399535716,
+      "geant4_channels": [
+        14309,
+        3956,
+        680,
+        1854
+      ],
+      "metal_channels": [
+        14155,
+        3989,
+        639,
+        1793
+      ],
+      "metal_history_seed": 786701749,
+      "metal_air_interaction_hits": 24,
+      "profile_integrated_cpu": 4272.0000001046465,
+      "profile_integrated_gpu": 4306.000000671191
+    }
+  ],
+  "channels": {
+    "direct": {
+      "geant4": 28715,
+      "metal": 28142,
+      "relative_difference": -0.019954727494340907,
+      "poisson_z": -2.4030491385789494
+    },
+    "single_rayleigh": {
+      "geant4": 7990,
+      "metal": 8076,
+      "relative_difference": 0.01076345431789738,
+      "poisson_z": 0.6784917478576049
+    },
+    "multiple_rayleigh": {
+      "geant4": 1363,
+      "metal": 1305,
+      "relative_difference": -0.04255319148936165,
+      "poisson_z": -1.122884484360431
+    },
+    "compton": {
+      "geant4": 3631,
+      "metal": 3636,
+      "relative_difference": 0.0013770311209033714,
+      "poisson_z": 0.05865329628177103
+    }
+  },
+  "transmission_geant4": 0.00143575,
+  "transmission_metal": 0.0014071,
+  "profile_parity": {
+    "bins": 200,
+    "covariance_rank": 200,
+    "chi2": 195.46516884750247,
+    "reduced_chi2": 0.9773258442375123,
+    "chi2_p_value": 0.5773323471915218,
+    "max_abs_bin_z": 3.483886459399021,
+    "mean_bin_z": 0.08883494223020832,
+    "integrated_relative_difference": 0.015882216694371065,
+    "q_min_nm_inv": 1.0725000089406966,
+    "q_max_nm_inv": 29.92750356733799
+  },
+  "geant4_source_sha256_16": "e56de10b54e10005",
+  "metal_source_sha256_16": "b80eae2e541d856c",
+  "metal_physics_sha256_16": "2af5acdf6b821c17",
+  "metal_physics_path": "tutorial/saxs_keele/gpu_transport/results/multi_transport/water_22p022_shell_physics.json",
+  "roots_created": 0,
+  "elapsed_seconds": 34.842613832995994,
+  "limitations": [
+    "ideal detector",
+    "homogeneous water",
+    "Metal fixed incident-energy Compton CDF",
+    "Metal free-electron Compton energy shift",
+    "no fluorescence"
+  ]
+}

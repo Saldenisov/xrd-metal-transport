@@ -1,0 +1,20 @@
+{
+  "classes": [
+    16588296,
+    2443736,
+    201332,
+    1067707,
+    25876,
+    154982407,
+    24690646,
+    0
+  ],
+  "counts_on_detector": 20326947,
+  "detector_pixels": 1000,
+  "interaction_cap_count": 0,
+  "photons": 200000000,
+  "physics_scope": "G4 XS + MIFF Rayleigh + calibrated Compton angle; free-electron energy shift; no fluorescence or detector response",
+  "seconds_gpu_kernel": 0.15872804186074063,
+  "seconds_total": 0.542667031288147,
+  "wall_seconds_with_process_startup": 0.580036375002237
+}

@@ -1,0 +1,35 @@
+# Generated Keele fat/water/collagen mixture.
+# Mass fractions: fat=0.000000, water=1.000000, collagen=0.000000
+/det/setCustomMatDensity 1.0000000000
+/det/setCustomMatHmassfract 0.1119000000
+/det/setCustomMatCmassfract 0.0000000000
+/det/setCustomMatNmassfract 0.0000000000
+/det/setCustomMatOmassfract 0.8881000000
+/det/SetCustomMatFF data/keele_custom_water.dat
+
+/det/setPhantomMaterial 30
+/det/setPhantomDiameter 10. mm
+/det/setPhantomHeight 1. mm
+/det/setPhantomZ 500. mm
+/det/setSlits false
+/det/setDetectorSize 300. mm
+/det/setDetectorThickness 1. mm
+/det/setDetectorSampleDistance 500. mm
+
+/phys/SelectPhysicsList empenelopeMI
+/run/setCut 0.1 mm
+/run/verbose 1
+/run/initialize
+/run/setfilenamesave results/keele_custom_water
+
+/gps/pos/type Plane
+/gps/pos/shape Circle
+/gps/pos/radius 0.1 mm
+/gps/pos/centre 0. 0. 0. mm
+/gps/direction 0 0 1
+/gps/particle gamma
+/gps/ene/type Mono
+/gps/ene/mono 20. keV
+
+/run/printProgress 10000
+/run/beamOn 10000

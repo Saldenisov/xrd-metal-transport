@@ -1,0 +1,48 @@
+{
+  "photons": 20000000,
+  "g4_threads": 14,
+  "mass_fractions_water_fat_collagen": [
+    0.45,
+    0.45,
+    0.1
+  ],
+  "added_unknown_residual_peak": false,
+  "g4_seconds_wall": 36.922673749999376,
+  "metal_seconds_wall": 0.1457660830055829,
+  "metal_seconds_transport_and_reduction": 0.0993720293045044,
+  "metal_kernel_seconds": 0.05565275004482828,
+  "wall_speedup": 253.3008570216243,
+  "transport_speedup_excluding_metal_startup": 371.560025576792,
+  "g4_counts": {
+    "direct": 1529839,
+    "single_rayleigh": 227071,
+    "multiple_rayleigh": 19103,
+    "compton": 96636
+  },
+  "metal_counts": [
+    1533200,
+    227438,
+    18973,
+    96816,
+    0,
+    15801686,
+    2321887,
+    0
+  ],
+  "channel_relative_difference": {
+    "direct": 0.002196963209854186,
+    "single_rayleigh": 0.001616234569804087,
+    "multiple_rayleigh": -0.006805213840758051,
+    "compton": 0.0018626598783062498
+  },
+  "g4_detector_total": 1872649,
+  "metal_detector_total": 1876427,
+  "radial_relative_rms_2_to_28_nm_inv": 0.05729785982501489,
+  "radial_mean_relative_bias_2_to_28_nm_inv": 0.00396806467234121,
+  "roots_retained": 0,
+  "not_yet_geant4_equivalent": [
+    "photoelectric fluorescence",
+    "Rayleigh CDF sampling is approximate rather than Geant4 RITA",
+    "detector response"
+  ]
+}

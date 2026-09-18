@@ -1,0 +1,44 @@
+# Representative 50% adipose / 50% glandular breast phantom.
+# The ICRU-44 endpoint compositions were projected onto the Keele basis.
+# Keele-basis mass fractions: fat=0.510305, water=0.385893, collagen=0.103802
+# Geometry along +z:
+# source z=0 mm
+# breast centre z=100 mm, central path length=50 mm
+# breast downstream surface z=125 mm
+# detector entrance z=275 mm (150 mm air gap)
+# active analysis area=50 x 50 mm2 (500 x 500 pixels, 0.1 mm pitch)
+
+/random/setSeeds 161803 141421
+/det/setCustomMatDensity 0.9794738076
+/det/setCustomMatHmassfract 0.1074785105
+/det/setCustomMatCmassfract 0.4680700880
+/det/setCustomMatNmassfract 0.0189646254
+/det/setCustomMatOmassfract 0.4054867761
+/det/SetCustomMatFF data/keele_breast_g50.dat
+
+/det/setPhantomMaterial 30
+/det/setPhantomBox true
+/det/setPhantomDiameter 50. mm
+/det/setPhantomHeight 60. mm
+/det/setPhantomZ 100. mm
+/det/setSlits false
+/det/setDetectorSize 70.710678 mm
+/det/setDetectorThickness 0.3 mm
+/det/setDetectorSampleDistance 175.15 mm
+
+/phys/SelectPhysicsList empenelopeMI
+/run/setCut 0.01 mm
+/run/verbose 1
+/run/initialize
+/run/setfilenamesave results/keele_breast_g50_ag_ka1
+/sd/setSK true
+
+/gps/pos/type Point
+/gps/pos/centre 0. 0. 0. mm
+/gps/direction 0 0 1
+/gps/particle gamma
+/gps/ene/type Mono
+/gps/ene/mono 22.162917 keV
+
+/run/printProgress 1000000
+/run/beamOn 33333333

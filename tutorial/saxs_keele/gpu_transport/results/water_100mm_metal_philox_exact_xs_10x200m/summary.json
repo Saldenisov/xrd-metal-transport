@@ -1,0 +1,197 @@
+{
+  "reference": "water_100mm_cpu_metal_10x200m",
+  "geometry": {
+    "detector_pixels": 1000,
+    "pixel_pitch_um": 100.0,
+    "sample_thickness_mm": 100.0,
+    "front_face_to_detector_mm": 200.0,
+    "mean_scattering_plane_to_detector_mm": 150.0,
+    "energy_kev": 22.0220601,
+    "q_range_nm_inv": [
+      1.0,
+      30.0
+    ],
+    "radial_points": 200
+  },
+  "incident_photons_per_engine": 2000000000,
+  "records": [
+    {
+      "run": 0,
+      "incident_photons": 200000000,
+      "metal_seconds": 0.6234857919916976,
+      "metal_channels": [
+        285117,
+        80716,
+        13224,
+        37591
+      ],
+      "metal_air_interaction_hits": 491,
+      "seed": 800053
+    },
+    {
+      "run": 1,
+      "incident_photons": 200000000,
+      "metal_seconds": 0.609564375015907,
+      "metal_channels": [
+        284589,
+        80454,
+        13278,
+        37240
+      ],
+      "metal_air_interaction_hits": 460,
+      "seed": 2833932085
+    },
+    {
+      "run": 2,
+      "incident_photons": 200000000,
+      "metal_seconds": 0.6216199579939712,
+      "metal_channels": [
+        286131,
+        81127,
+        13309,
+        37271
+      ],
+      "metal_air_interaction_hits": 515,
+      "seed": 1372096821
+    },
+    {
+      "run": 3,
+      "incident_photons": 200000000,
+      "metal_seconds": 0.6262734580086544,
+      "metal_channels": [
+        285225,
+        80498,
+        13166,
+        37351
+      ],
+      "metal_air_interaction_hits": 501,
+      "seed": 4205228853
+    },
+    {
+      "run": 4,
+      "incident_photons": 200000000,
+      "metal_seconds": 0.633682666986715,
+      "metal_channels": [
+        284657,
+        80721,
+        13334,
+        37264
+      ],
+      "metal_air_interaction_hits": 516,
+      "seed": 2743393589
+    },
+    {
+      "run": 5,
+      "incident_photons": 200000000,
+      "metal_seconds": 0.626112917001592,
+      "metal_channels": [
+        285302,
+        80668,
+        13332,
+        37781
+      ],
+      "metal_air_interaction_hits": 513,
+      "seed": 1281558325
+    },
+    {
+      "run": 6,
+      "incident_photons": 200000000,
+      "metal_seconds": 0.629204666998703,
+      "metal_channels": [
+        285205,
+        80853,
+        13421,
+        37732
+      ],
+      "metal_air_interaction_hits": 466,
+      "seed": 4114690357
+    },
+    {
+      "run": 7,
+      "incident_photons": 200000000,
+      "metal_seconds": 0.6231457079993561,
+      "metal_channels": [
+        285800,
+        80105,
+        13435,
+        37487
+      ],
+      "metal_air_interaction_hits": 465,
+      "seed": 2652855093
+    },
+    {
+      "run": 8,
+      "incident_photons": 200000000,
+      "metal_seconds": 0.6323341669922229,
+      "metal_channels": [
+        284164,
+        80554,
+        13522,
+        37459
+      ],
+      "metal_air_interaction_hits": 511,
+      "seed": 1191019829
+    },
+    {
+      "run": 9,
+      "incident_photons": 200000000,
+      "metal_seconds": 0.6281982910004444,
+      "metal_channels": [
+        285643,
+        80979,
+        13531,
+        37608
+      ],
+      "metal_air_interaction_hits": 504,
+      "seed": 4024151861
+    }
+  ],
+  "channels": {
+    "direct": {
+      "geant4": 2860286,
+      "metal": 2851833,
+      "relative_difference": -0.00295529887570678,
+      "poisson_z": -3.536814201483347
+    },
+    "single_rayleigh": {
+      "geant4": 805948,
+      "metal": 806675,
+      "relative_difference": 0.0009020433080049184,
+      "poisson_z": 0.5724901068165442
+    },
+    "multiple_rayleigh": {
+      "geant4": 132055,
+      "metal": 133552,
+      "relative_difference": 0.011336185680208999,
+      "poisson_z": 2.904705065344715
+    },
+    "compton": {
+      "geant4": 371120,
+      "metal": 374784,
+      "relative_difference": 0.009872817417546864,
+      "poisson_z": 4.242423276688166
+    }
+  },
+  "transmission_geant4": 0.001430143,
+  "transmission_metal": 0.0014259165,
+  "profile": {
+    "bins": 200,
+    "chi2_plug_in": 219.1410147830068,
+    "dof": 200,
+    "reduced_chi2_plug_in": 1.095705073915034,
+    "p_value_plug_in": 0.16822548253369157,
+    "integrated_relative_difference": 0.0013962952041930432,
+    "covariance_caveat": "Geant4 pixel image was discarded; 2x Metal pixel counts supply the null covariance, so the p-value is approximate."
+  },
+  "physics_sha256_16": "d89e818920cec83f",
+  "metal_source_sha256_16": "3e1ab090de4c693e",
+  "elapsed_seconds": 7.318062124977587,
+  "roots_created": 0,
+  "limitations": [
+    "ideal entrance counter",
+    "homogeneous water",
+    "sample-calibrated Compton CDF reused in air",
+    "free-electron Compton energy shift",
+    "no fluorescence"
+  ]
+}

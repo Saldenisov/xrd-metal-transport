@@ -1,0 +1,61 @@
+{
+  "photons": 20000000,
+  "g4_threads": 14,
+  "mass_fractions_water_fat_collagen": [
+    0.45,
+    0.45,
+    0.1
+  ],
+  "added_unknown_residual_peak": false,
+  "g4_seconds_wall": 33.65821587498067,
+  "metal_seconds_wall": 0.17101966601330787,
+  "metal_seconds_transport_and_reduction": 0.1188349723815918,
+  "metal_kernel_seconds": 0.07268308338825591,
+  "wall_speedup": 196.80903757794476,
+  "transport_speedup_excluding_metal_startup": 283.2349366556887,
+  "g4_counts": {
+    "direct": 1529839,
+    "single_rayleigh": 227071,
+    "multiple_rayleigh": 19103,
+    "compton": 96636
+  },
+  "metal_counts": [
+    1533201,
+    227449,
+    18965,
+    96463,
+    0,
+    16191472,
+    1932450,
+    0
+  ],
+  "channel_relative_difference": {
+    "direct": 0.002197616873409469,
+    "single_rayleigh": 0.0016646775678090808,
+    "multiple_rayleigh": -0.007223996230958485,
+    "compton": -0.0017902231052610018
+  },
+  "g4_detector_total": 1872649,
+  "metal_detector_total": 1876078,
+  "radial_relative_rms_2_to_28_nm_inv": 0.05748612979087562,
+  "radial_mean_relative_bias_2_to_28_nm_inv": 0.003158774578263693,
+  "profile_parity": {
+    "bins": 256,
+    "covariance_rank": 256,
+    "chi2": 271.5018764056723,
+    "reduced_chi2": 1.0605542047096574,
+    "chi2_p_value": 0.24163419361143512,
+    "max_abs_bin_z": 3.2304040950455444,
+    "mean_bin_z": 0.055415282859380625,
+    "integrated_relative_difference": 0.0010244350537478297,
+    "q_min_nm_inv": 1.0566406319849193,
+    "q_max_nm_inv": 29.943362944293767
+  },
+  "roots_created": 0,
+  "roots_retained": 0,
+  "not_yet_geant4_equivalent": [
+    "photoelectric fluorescence",
+    "Rayleigh CDF sampling is approximate rather than Geant4 RITA",
+    "detector response"
+  ]
+}

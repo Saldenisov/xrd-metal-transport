@@ -1,0 +1,176 @@
+{
+  "colleague_source": "private colleague joblib (not redistributed)",
+  "colleague_runs": [
+    "20250726_234121",
+    "20250726_234122",
+    "20250726_234123"
+  ],
+  "wavelength_m": 5.63e-11,
+  "energy_kev": 22.022060112468964,
+  "source_to_sample_air_mm": [
+    90,
+    85,
+    80
+  ],
+  "inferred_square_side_mm": 240.00003322550796,
+  "inferred_pixel_um": 240.00003322550796,
+  "geometry_assumption": "1000x1000 pixels and detector edge inferred from colleague q max; joblib does not specify detector pixels, mask or incident flux",
+  "incident_photons_per_simulation": 50000000,
+  "common_scale_colleague_per_geant4": 0.2894817081062965,
+  "common_scale_colleague_per_metal": 0.2898922215659768,
+  "near_axis_intensity_ratios_20_30_40_mm": {
+    "colleague": [
+      1.0,
+      0.5193370686308185,
+      0.26948271174049
+    ],
+    "cpu": [
+      1.0,
+      0.5252262926044182,
+      0.2759162528801315
+    ],
+    "gpu": [
+      1.0,
+      0.5247212457371183,
+      0.2754432844712612
+    ]
+  },
+  "profiles": {
+    "20": {
+      "adjusted_distance_mm": 490.0,
+      "geant4_wall_seconds": 79.12047670799075,
+      "metal_wall_seconds": 0.19909954199101776,
+      "geant4_detector_hits": 13649897,
+      "metal_detector_hits": 13643296,
+      "metal_detector_relative_difference": -0.00048359339268277957,
+      "metal_classes": [
+        12943931,
+        541452,
+        15022,
+        86248,
+        56643,
+        30499266,
+        5857438,
+        0
+      ],
+      "poisson_ring_parity_5_to_30_nm_inv": {
+        "q_bins": 687,
+        "reduced_chi2": 0.9697273625621355,
+        "integrated_count_relative_bias": 0.0006694153981219308
+      },
+      "cpu_vs_colleague": {
+        "correlation": 0.9962633887570641,
+        "relative_rmse": 0.03676507729041597,
+        "model_peak_q_nm^-1": 20.122294346401873,
+        "single_scale_relative_rmse": 0.03979334974884256
+      },
+      "gpu_vs_colleague": {
+        "correlation": 0.9955968809899414,
+        "relative_rmse": 0.0396186341702683,
+        "model_peak_q_nm^-1": 19.831457210410516,
+        "single_scale_relative_rmse": 0.04185417683961742
+      },
+      "gpu_vs_cpu": {
+        "correlation": 0.9969757159384912,
+        "relative_rmse": 0.031305025402600675,
+        "model_peak_q_nm^-1": 19.831457210410516
+      },
+      "cpu_vs_colleague_thickness_remapped": {
+        "correlation": 0.9942571160978126,
+        "relative_rmse": 0.043472064965986094,
+        "model_peak_q_nm^-1": 20.122294346401873
+      }
+    },
+    "30": {
+      "adjusted_distance_mm": 485.0,
+      "geant4_wall_seconds": 77.26085633400362,
+      "metal_wall_seconds": 0.19266875000903383,
+      "geant4_detector_hits": 7293331,
+      "metal_detector_hits": 7281862,
+      "metal_detector_relative_difference": -0.001572532495782819,
+      "metal_classes": [
+        6730941,
+        426196,
+        17651,
+        77378,
+        29696,
+        37504057,
+        5214081,
+        0
+      ],
+      "poisson_ring_parity_5_to_30_nm_inv": {
+        "q_bins": 687,
+        "reduced_chi2": 1.0195547440389974,
+        "integrated_count_relative_bias": -0.0028611507389318946
+      },
+      "cpu_vs_colleague": {
+        "correlation": 0.9954826374644516,
+        "relative_rmse": 0.04051882210674137,
+        "model_peak_q_nm^-1": 19.613329358417,
+        "single_scale_relative_rmse": 0.04133501615006749
+      },
+      "gpu_vs_colleague": {
+        "correlation": 0.9953778537329755,
+        "relative_rmse": 0.04142505854984699,
+        "model_peak_q_nm^-1": 19.831457210410516,
+        "single_scale_relative_rmse": 0.04166478830410919
+      },
+      "gpu_vs_cpu": {
+        "correlation": 0.9964901007298642,
+        "relative_rmse": 0.034716298628905726,
+        "model_peak_q_nm^-1": 19.831457210410516
+      },
+      "cpu_vs_colleague_thickness_remapped": {
+        "correlation": 0.9900427844877134,
+        "relative_rmse": 0.05827258349530994,
+        "model_peak_q_nm^-1": 19.613329358417
+      }
+    },
+    "40": {
+      "adjusted_distance_mm": 480.0,
+      "geant4_wall_seconds": 75.75586950001889,
+      "metal_wall_seconds": 0.20625891702366062,
+      "geant4_detector_hits": 3900913,
+      "metal_detector_hits": 3892546,
+      "metal_detector_relative_difference": -0.002144882492893352,
+      "metal_classes": [
+        3500020,
+        299685,
+        16434,
+        60386,
+        16021,
+        41555551,
+        4551903,
+        0
+      ],
+      "poisson_ring_parity_5_to_30_nm_inv": {
+        "q_bins": 687,
+        "reduced_chi2": 1.1005266993763179,
+        "integrated_count_relative_bias": -0.0008245225341447782
+      },
+      "cpu_vs_colleague": {
+        "correlation": 0.9939384900014517,
+        "relative_rmse": 0.046282103923946515,
+        "model_peak_q_nm^-1": 19.64968400041592,
+        "single_scale_relative_rmse": 0.05677306171422342
+      },
+      "gpu_vs_colleague": {
+        "correlation": 0.993149923806826,
+        "relative_rmse": 0.048088976294490805,
+        "model_peak_q_nm^-1": 20.013230420405115,
+        "single_scale_relative_rmse": 0.05834464692601486
+      },
+      "gpu_vs_cpu": {
+        "correlation": 0.9946600067716793,
+        "relative_rmse": 0.04279674983831288,
+        "model_peak_q_nm^-1": 20.013230420405115
+      },
+      "cpu_vs_colleague_thickness_remapped": {
+        "correlation": 0.984713470610887,
+        "relative_rmse": 0.07266594052267836,
+        "model_peak_q_nm^-1": 19.64968400041592
+      }
+    }
+  },
+  "roots_created": 0
+}

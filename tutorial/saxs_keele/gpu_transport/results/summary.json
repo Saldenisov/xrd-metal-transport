@@ -1,0 +1,16 @@
+{
+  "cases": 100,
+  "photons_per_case": 10000000,
+  "all_class_counts_equal": false,
+  "all_q_histograms_equal": false,
+  "cases_with_rounding_difference": 76,
+  "total_class_l1_over_all_cases": 74,
+  "total_q_histogram_l1_over_all_cases": 229,
+  "max_class_l1_per_case": 6,
+  "max_q_histogram_l1_per_case": 8,
+  "median_speedup": 6.48503512686713,
+  "mean_cpu_s": 0.27191360712051393,
+  "mean_metal_s": 0.0412911057472229,
+  "physics_scope": "single-Rayleigh only; other first and subsequent interactions not transported",
+  "cross_sections_source": "Geant4 SAXS_DUMP_XS at 22.162917 keV for g50 material and Air"
+}

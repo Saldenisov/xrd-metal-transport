@@ -1,0 +1,39 @@
+# Ag K-alpha2 part of the representative 50% adipose / 50% glandular breast run.
+# Keele-basis mass fractions: fat=0.510305, water=0.385893, collagen=0.103802
+# 50 mm box phantom; 150 mm downstream-face-to-detector gap.
+# 500 x 500 pixels are formed in analysis at 0.1 mm pitch.
+
+/random/setSeeds 173205 223607
+/det/setCustomMatDensity 0.9794738076
+/det/setCustomMatHmassfract 0.1074785105
+/det/setCustomMatCmassfract 0.4680700880
+/det/setCustomMatNmassfract 0.0189646254
+/det/setCustomMatOmassfract 0.4054867761
+/det/SetCustomMatFF data/keele_breast_g50.dat
+
+/det/setPhantomMaterial 30
+/det/setPhantomBox true
+/det/setPhantomDiameter 50. mm
+/det/setPhantomHeight 60. mm
+/det/setPhantomZ 100. mm
+/det/setSlits false
+/det/setDetectorSize 70.710678 mm
+/det/setDetectorThickness 0.3 mm
+/det/setDetectorSampleDistance 175.15 mm
+
+/phys/SelectPhysicsList empenelopeMI
+/run/setCut 0.01 mm
+/run/verbose 1
+/run/initialize
+/run/setfilenamesave results/keele_breast_g50_ag_ka2
+/sd/setSK true
+
+/gps/pos/type Point
+/gps/pos/centre 0. 0. 0. mm
+/gps/direction 0 0 1
+/gps/particle gamma
+/gps/ene/type Mono
+/gps/ene/mono 21.990300 keV
+
+/run/printProgress 1000000
+/run/beamOn 16666667

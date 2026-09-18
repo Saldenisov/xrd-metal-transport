@@ -1,0 +1,37 @@
+{
+  "incident_photons_per_backend": 2000000000,
+  "repetitions": 10,
+  "seed_run_offset": 20,
+  "channels": {
+    "direct": {
+      "geant4": 2860286,
+      "metal": 2853741,
+      "relative_difference": -0.002288232715189964,
+      "poisson_z": -2.738031919731922
+    },
+    "single_rayleigh": {
+      "geant4": 805948,
+      "metal": 806495,
+      "relative_difference": 0.0006787038369722165,
+      "poisson_z": 0.43076969300527285
+    },
+    "multiple_rayleigh": {
+      "geant4": 132055,
+      "metal": 132812,
+      "relative_difference": 0.005732459959865155,
+      "poisson_z": 1.4708959535596682
+    },
+    "compton": {
+      "geant4": 371120,
+      "metal": 370042,
+      "relative_difference": -0.0029047208450097006,
+      "poisson_z": -1.2521668111382676
+    }
+  },
+  "profile_integrated_geant4": 878754.0000160777,
+  "profile_integrated_metal": 878898.0000160926,
+  "profile_integrated_relative_difference": 0.00016386838638826617,
+  "profile_caveat": "Geant4 pixel image discarded; exact inter-bin covariance unavailable, so no formal profile p-value is reported",
+  "metal_elapsed_seconds": 8.057074623997323,
+  "roots_retained": 0
+}

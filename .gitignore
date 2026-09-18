@@ -1,0 +1,17 @@
+build/
+install/
+upstream/
+.venv/
+.pytest_cache/
+.ruff_cache/
+__pycache__/
+*.pyc
+*.root
+*.raw
+*.npz
+*.png
+*.pdf
+*.csv
+tutorial/saxs_keele/gpu_transport/multi_transport
+tutorial/saxs_keele/gpu_transport/single_rayleigh
+tutorial/saxs_keele/*.out

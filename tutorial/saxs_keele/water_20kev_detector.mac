@@ -1,0 +1,48 @@
+# Minimal Keele-water detector image.
+# Geometry along +z:
+# source z=0 mm
+# water centre z=100 mm, beam path length=10 mm
+# water downstream face z=105 mm
+# detector entrance z=205 mm (100 mm air gap)
+# detector active analysis area=51.2 x 51.2 mm2 (256 x 256 pixels, 0.2 mm pitch)
+
+/random/setSeeds 314159 271828
+
+# Keele water composition and molecular-interference form factor.
+/det/setCustomMatDensity 1.0000000000
+/det/setCustomMatHmassfract 0.1119000000
+/det/setCustomMatCmassfract 0.0000000000
+/det/setCustomMatNmassfract 0.0000000000
+/det/setCustomMatOmassfract 0.8881000000
+/det/SetCustomMatFF data/keele_custom_water.dat
+
+/det/setPhantomMaterial 30
+# This SAXS example rotates the cylinder axis perpendicular to the beam.
+# Therefore its diameter, not its height, sets the central path length along z.
+/det/setPhantomDiameter 10. mm
+/det/setPhantomHeight 30. mm
+/det/setPhantomZ 100. mm
+/det/setSlits false
+
+# The Geant4 example detector is circular. Its diameter is the diagonal of the
+# 51.2 mm square active area; analysis crops it to the requested square.
+/det/setDetectorSize 72.407734 mm
+/det/setDetectorThickness 0.1 mm
+/det/setDetectorSampleDistance 105.05 mm
+
+/phys/SelectPhysicsList empenelopeMI
+/run/setCut 0.01 mm
+/run/verbose 1
+/run/initialize
+/run/setfilenamesave results/water_20kev_10m
+/sd/setSK true
+
+/gps/particle gamma
+/gps/ene/type Mono
+/gps/ene/mono 20. keV
+/gps/pos/type Point
+/gps/pos/centre 0. 0. 0. mm
+/gps/direction 0 0 1
+
+/run/printProgress 1000000
+/run/beamOn 10000000

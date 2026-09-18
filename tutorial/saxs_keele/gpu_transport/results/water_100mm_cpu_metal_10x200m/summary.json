@@ -1,0 +1,294 @@
+{
+  "geometry": {
+    "detector_pixels": 1000,
+    "pixel_pitch_um": 100.0,
+    "sample_thickness_mm": 100.0,
+    "front_face_to_detector_mm": 200.0,
+    "mean_scattering_plane_to_detector_mm": 150.0,
+    "energy_kev": 22.0220601,
+    "q_range_nm_inv": [
+      1.0,
+      30.0
+    ],
+    "radial_points": 200
+  },
+  "beam_diameter_um": 100.0,
+  "beam_direction": "parallel",
+  "upstream_air_mm": 0.1,
+  "downstream_air_mm": 100.0,
+  "incident_photons_per_backend": 2000000000,
+  "repetitions": 10,
+  "individual_runs": [
+    {
+      "run": 0,
+      "incident_photons_per_backend": 200000000,
+      "geant4_seconds": 300.7907948339998,
+      "metal_seconds": 0.5622281249961816,
+      "geant4_channels": [
+        286245,
+        80678,
+        13212,
+        36956
+      ],
+      "metal_channels": [
+        284540,
+        79923,
+        13241,
+        37207
+      ],
+      "metal_history_seed": 800053,
+      "metal_air_interaction_hits": 511,
+      "profile_integrated_cpu": 88060.99999920621,
+      "profile_integrated_gpu": 87379.00000083463
+    },
+    {
+      "run": 1,
+      "incident_photons_per_backend": 200000000,
+      "geant4_seconds": 289.93704766599694,
+      "metal_seconds": 0.5791904579964466,
+      "geant4_channels": [
+        286072,
+        80706,
+        13140,
+        37317
+      ],
+      "metal_channels": [
+        284076,
+        80211,
+        13062,
+        37110
+      ],
+      "metal_history_seed": 2833932085,
+      "metal_air_interaction_hits": 496,
+      "profile_integrated_cpu": 88047.00000218276,
+      "profile_integrated_gpu": 87411.99999742421
+    },
+    {
+      "run": 2,
+      "incident_photons_per_backend": 200000000,
+      "geant4_seconds": 284.4917434999952,
+      "metal_seconds": 0.5783269999956246,
+      "geant4_channels": [
+        286410,
+        80246,
+        12996,
+        36881
+      ],
+      "metal_channels": [
+        284387,
+        80439,
+        13230,
+        36762
+      ],
+      "metal_history_seed": 1372096821,
+      "metal_air_interaction_hits": 486,
+      "profile_integrated_cpu": 87542.00000758361,
+      "profile_integrated_gpu": 87599.00000042489
+    },
+    {
+      "run": 3,
+      "incident_photons_per_backend": 200000000,
+      "geant4_seconds": 294.22192095799255,
+      "metal_seconds": 0.5701070830109529,
+      "geant4_channels": [
+        287038,
+        80663,
+        13261,
+        37058
+      ],
+      "metal_channels": [
+        284277,
+        80298,
+        13214,
+        36802
+      ],
+      "metal_history_seed": 4205228853,
+      "metal_air_interaction_hits": 492,
+      "profile_integrated_cpu": 87729.00000142973,
+      "profile_integrated_gpu": 87434.00000695439
+    },
+    {
+      "run": 4,
+      "incident_photons_per_backend": 200000000,
+      "geant4_seconds": 303.3501558340213,
+      "metal_seconds": 0.576589292002609,
+      "geant4_channels": [
+        284805,
+        80852,
+        13346,
+        37294
+      ],
+      "metal_channels": [
+        284235,
+        80296,
+        13062,
+        36810
+      ],
+      "metal_history_seed": 2743393589,
+      "metal_air_interaction_hits": 497,
+      "profile_integrated_cpu": 88517.99999689643,
+      "profile_integrated_gpu": 87209.00000216597
+    },
+    {
+      "run": 5,
+      "incident_photons_per_backend": 200000000,
+      "geant4_seconds": 302.11806087498553,
+      "metal_seconds": 0.6433064579905476,
+      "geant4_channels": [
+        286281,
+        80284,
+        13031,
+        37055
+      ],
+      "metal_channels": [
+        284842,
+        80146,
+        13355,
+        37231
+      ],
+      "metal_history_seed": 1281558325,
+      "metal_air_interaction_hits": 499,
+      "profile_integrated_cpu": 87480.99999895901,
+      "profile_integrated_gpu": 87869.99999906213
+    },
+    {
+      "run": 6,
+      "incident_photons_per_backend": 200000000,
+      "geant4_seconds": 286.3974975000019,
+      "metal_seconds": 0.5782380830205511,
+      "geant4_channels": [
+        286212,
+        80380,
+        13460,
+        36952
+      ],
+      "metal_channels": [
+        284601,
+        80346,
+        13327,
+        37093
+      ],
+      "metal_history_seed": 4114690357,
+      "metal_air_interaction_hits": 553,
+      "profile_integrated_cpu": 87826.9999964463,
+      "profile_integrated_gpu": 87749.99999986221
+    },
+    {
+      "run": 7,
+      "incident_photons_per_backend": 200000000,
+      "geant4_seconds": 288.5124713749974,
+      "metal_seconds": 0.568720042007044,
+      "geant4_channels": [
+        286382,
+        80157,
+        13244,
+        37178
+      ],
+      "metal_channels": [
+        284484,
+        80457,
+        13247,
+        37215
+      ],
+      "metal_history_seed": 2652855093,
+      "metal_air_interaction_hits": 487,
+      "profile_integrated_cpu": 87522.00000432027,
+      "profile_integrated_gpu": 87609.99999427458
+    },
+    {
+      "run": 8,
+      "incident_photons_per_backend": 200000000,
+      "geant4_seconds": 290.84105241598445,
+      "metal_seconds": 0.5733189169841353,
+      "geant4_channels": [
+        285737,
+        80677,
+        13249,
+        37245
+      ],
+      "metal_channels": [
+        284605,
+        80570,
+        13310,
+        37131
+      ],
+      "metal_history_seed": 1191019829,
+      "metal_air_interaction_hits": 482,
+      "profile_integrated_cpu": 87906.00000921405,
+      "profile_integrated_gpu": 87687.99999429352
+    },
+    {
+      "run": 9,
+      "incident_photons_per_backend": 200000000,
+      "geant4_seconds": 291.7118848329992,
+      "metal_seconds": 0.5956297919910867,
+      "geant4_channels": [
+        285104,
+        81305,
+        13116,
+        37184
+      ],
+      "metal_channels": [
+        284005,
+        80013,
+        13230,
+        37489
+      ],
+      "metal_history_seed": 4024151861,
+      "metal_air_interaction_hits": 481,
+      "profile_integrated_cpu": 88120.9999998393,
+      "profile_integrated_gpu": 87507.00000317568
+    }
+  ],
+  "channels": {
+    "direct": {
+      "geant4": 2860286,
+      "metal": 2844052,
+      "relative_difference": -0.005675656210602731,
+      "poisson_z": -6.7970883681355305
+    },
+    "single_rayleigh": {
+      "geant4": 805948,
+      "metal": 802699,
+      "relative_difference": -0.004031277452143267,
+      "poisson_z": -2.561647305297531
+    },
+    "multiple_rayleigh": {
+      "geant4": 132055,
+      "metal": 132278,
+      "relative_difference": 0.0016886903184278879,
+      "poisson_z": 0.4337396958377538
+    },
+    "compton": {
+      "geant4": 371120,
+      "metal": 370850,
+      "relative_difference": -0.0007275274843716595,
+      "poisson_z": -0.3134516723316406
+    }
+  },
+  "transmission_geant4": 0.001430143,
+  "transmission_metal": 0.001422026,
+  "profile_parity": {
+    "bins": 200,
+    "covariance_rank": 200,
+    "chi2": 191.23746348209318,
+    "reduced_chi2": 0.9561873174104659,
+    "chi2_p_value": 0.6595478474559552,
+    "max_abs_bin_z": 2.8813822024005096,
+    "mean_bin_z": -0.17925360281471583,
+    "integrated_relative_difference": -0.0037507653080898207,
+    "q_min_nm_inv": 1.0725000089406966,
+    "q_max_nm_inv": 29.92750356733799
+  },
+  "geant4_source_sha256_16": "e56de10b54e10005",
+  "metal_source_sha256_16": "abedf27f33b41779",
+  "roots_created": 0,
+  "elapsed_seconds": 2940.5497504160157,
+  "limitations": [
+    "ideal detector",
+    "homogeneous water",
+    "Metal fixed incident-energy Compton CDF",
+    "Metal free-electron Compton energy shift",
+    "no fluorescence"
+  ]
+}

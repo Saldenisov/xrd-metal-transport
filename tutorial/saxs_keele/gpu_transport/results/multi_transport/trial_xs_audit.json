@@ -1,0 +1,47 @@
+{
+  "g50": {
+    "fractions": {
+      "water": 0.385893,
+      "fat": 0.510305,
+      "collagen": 0.103802
+    },
+    "max_relative_error_phot": 2.163330785065476e-06,
+    "max_relative_error_compt": 0.0027141085280394384,
+    "max_relative_error_rayleigh": 2.2870594307278225e-14,
+    "relative_error_at_22kev": [
+      -1.1433427999918422e-06,
+      -0.0006797596090559743,
+      1.9984014443252818e-14
+    ]
+  },
+  "water_rich": {
+    "fractions": {
+      "water": 0.55,
+      "fat": 0.35,
+      "collagen": 0.1
+    },
+    "max_relative_error_phot": 4.33989580883587e-06,
+    "max_relative_error_compt": 0.002798005353595312,
+    "max_relative_error_rayleigh": 5.752106726730766e-05,
+    "relative_error_at_22kev": [
+      -2.4369757034570227e-06,
+      -0.0006966722996378794,
+      4.1101564313583694e-05
+    ]
+  },
+  "fat_rich": {
+    "fractions": {
+      "water": 0.32,
+      "fat": 0.58,
+      "collagen": 0.1
+    },
+    "max_relative_error_phot": 1.8875198664058956e-06,
+    "max_relative_error_compt": 0.0024976915616763407,
+    "max_relative_error_rayleigh": 2.6795398594625652e-05,
+    "relative_error_at_22kev": [
+      -1.8875198664058956e-06,
+      -0.0006238945758957337,
+      -1.4381254839768154e-05
+    ]
+  }
+}

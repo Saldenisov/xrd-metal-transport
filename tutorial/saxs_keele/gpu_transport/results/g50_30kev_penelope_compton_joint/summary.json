@@ -1,0 +1,39 @@
+{
+  "incident_energy_kev": 30.0,
+  "independent_compton_events_per_backend": 499573,
+  "metal_kernel": {
+    "photons": 499573,
+    "seconds_gpu_kernel": 0.0018505000043660402
+  },
+  "comparisons": {
+    "theta_rad": {
+      "geant4_mean": 1.5737690843952485,
+      "metal_mean": 1.5751175722151045,
+      "mean_difference_z": 0.911132356095319,
+      "histogram": {
+        "chi2": 58.33296490470792,
+        "dof": 63,
+        "reduced_chi2": 0.9259200778525067,
+        "p_value": 0.6430775208158401
+      }
+    },
+    "e_after_kev": {
+      "geant4_mean": 28.351737567556107,
+      "metal_mean": 28.349511941010885,
+      "mean_difference_z": -1.0758837027175976,
+      "histogram": {
+        "chi2": 16.805437292268824,
+        "dof": 16,
+        "reduced_chi2": 1.0503398307668015,
+        "p_value": 0.39829391079913157
+      }
+    },
+    "theta_energy_joint": {
+      "chi2": 177.7899560973911,
+      "dof": 178,
+      "reduced_chi2": 0.9988199780752309,
+      "p_value": 0.4903427285432278
+    }
+  },
+  "roots_retained": 0
+}
