@@ -75,12 +75,16 @@ response. Full tables, covariance tests and figures are in
 
 ## Timing and remaining tests
 
-For the changed 50 mm mixture, Geant4 took 33.66 s on 14 CPU threads;
-Metal process wall time, including startup and image output, was 0.171 s on
-an M4 Pro (197× ratio **for this benchmark**). For the independent 100 mm
-water run, Geant4 transport took 289.05 s versus 0.813 s for Metal transport
-and tally. These values compare different implementations on one host and are
-not a claim about clinical inverse-model throughput.
+In the maintained 100-million-history suite, complete-process wall-time ratios
+range from 185× to 314× on the recorded M4 Pro host. A separate 20-million-
+history image-output record gives 400.5×, but Geant4 writes CSV while Metal
+writes a raw binary image. Warm Metal transport-and-reduction intervals give
+364–372× in two older 20-million-history records; those ratios exclude Metal
+startup and are not symmetric end-to-end measurements. Exact definitions,
+records and limitations are reported in [PERFORMANCE.md](PERFORMANCE.md).
+
+These values compare different implementations on one host. They do not
+predict arbitrary Geant4 workloads or clinical inverse-model throughput.
 
 The strongest unresolved test is a fresh independent multi-billion-photon
 Geant4/Metal pair with retained covariance, followed by single-scatter

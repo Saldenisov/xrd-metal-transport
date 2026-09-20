@@ -28,6 +28,25 @@ square ideal detector. It emits parameters for both engines so dimensions are
 defined once. Supporting arbitrary Geant4 geometry would require a solid or
 voxel exporter plus a GPU navigator; neither exists in this repository.
 
+## Adaptation boundary
+
+| Function | Geant4 CPU reference | Metal implementation |
+|---|---|---|
+| Material physics | Constructs Geant4 materials and processes; exports macroscopic cross sections and Penelope oscillator tables | Validates and interpolates the exported tables |
+| Random numbers | Geant4 engine selected by the application | Independent Philox4x32-10 stream per photon |
+| Geometry | Geant4 solids and navigator | Analytic intersection with one finite rectangular box, air and one plane |
+| Rayleigh scattering | `G4PenelopeRayleighModelMI` with Geant4 RITA sampling | Tabulated angular CDF built from the same component form factors |
+| Compton scattering | Geant4 Penelope model | Metal translation of the supported Penelope final-state equations using exported shell data |
+| Transport loop | Geant4 tracking and process machinery | One independent photon history per Metal thread |
+| Detector scoring | Geant4 entrance-crossing scorer | GPU entrance-crossing tally with matched channel definitions |
+| Radial integration | Shared pyFAI operator on the detector image | Same exported sparse operator, applied after image output or directly on the GPU |
+
+This separation permits acceleration because the GPU path avoids the general
+Geant4 geometry and process framework for the supported case. It also defines
+the principal limitation: adding a new solid, heterogeneous material,
+secondary-particle process or detector response requires an explicit Metal
+implementation and a new Geant4 comparison.
+
 ## Metal source map
 
 | File | Single responsibility |

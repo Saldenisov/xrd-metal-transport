@@ -18,6 +18,24 @@ for this comparison, not an oracle for unmeasured sample properties.
 its own solids and Metal navigates its own finite box; no general Geant4 solid
 or navigation state is executed on the GPU.
 
+## Source of the reference physics
+
+The CPU reference is the Geant4 11.4.2 `saxs` example with local changes for
+finite geometry, scoring and table export. The official example, authored by
+Gianfranco Paternò, applies the molecular-interference extension of the
+Penelope Rayleigh model. Its scientific lineage is the Ferrara tissue
+form-factor work of Tartari, Taibi, Bonifazzi and Baraldi and the Geant4
+implementation and data publications of Paternò, Cardarelli, Contillo,
+Gambaccini and Taibi. Full references are listed in
+[PROVENANCE.md](PROVENANCE.md).
+
+Geant4 and G4EMLOW provide the reference electromagnetic models, atomic data
+and the Penelope shell tables used in this project. The Metal kernel does not
+call these libraries at runtime. It consumes tables exported from the actual
+Geant4 material setup and independently implements the documented transport
+subset. Agreement must therefore be established by numerical comparison; it
+does not follow from shared source code.
+
 ## Molecular-interference form factors
 
 The six-column input `data/xrd_components.txt` contains `q` in nm⁻¹ and

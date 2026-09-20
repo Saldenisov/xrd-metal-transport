@@ -1,11 +1,13 @@
 # XRD photon transport on Apple Metal
 
-Research prototype for **X-ray diffraction from homogeneous water, fat and
-collagen mixtures**. A Geant4 11.4.2 SAXS application provides the independent
-CPU reference and exports material cross sections and Penelope Compton shell
-tables. A Metal kernel transports independent photon histories through a finite
-sample box, air and an ideal pixel detector. The radial signal is analyzed by
-the same XRD-preprocessing/pyFAI path on both backends.
+Experimental research prototype for **X-ray diffraction from homogeneous
+water, fat and collagen mixtures** on Apple silicon. A Geant4 11.4.2 SAXS
+application provides the independent CPU reference and exports material cross
+sections and Penelope Compton shell tables. The supported transport subset was
+independently rewritten in Metal Shading Language, with Swift host code, for a
+Mac GPU. It transports independent photon histories through a finite sample
+box, air and an ideal pixel detector. The radial signal is analyzed by the same
+XRD-preprocessing/pyFAI path on both backends.
 
 This product includes software developed by Members of the Geant4 Collaboration
 (http://cern.ch/geant4). The adapted SAXS example remains distinguishable from
@@ -23,9 +25,48 @@ the Geant4 toolkit; see [provenance and license](docs/PROVENANCE.md).
 | `tutorial/saxs_keele/prepare_keele_ff.py` | Converts the six-column component table to Geant4 MI form factors |
 | `tutorial/saxs_keele/gpu_transport/results` | Small physics fixtures and historical JSON validation records; no raw histories or detector images |
 
-Read [architecture](docs/ARCHITECTURE.md), [physics and units](docs/PHYSICS.md), [reproducible examples](docs/EXAMPLES.md),
+Read [architecture](docs/ARCHITECTURE.md), [physics and units](docs/PHYSICS.md),
+[scientific and software provenance](docs/PROVENANCE.md),
+[reproducible examples](docs/EXAMPLES.md), [performance](docs/PERFORMANCE.md),
 and [validation with unresolved differences](docs/VALIDATION.md) before using
 the output as a reference.
+
+## Scientific lineage and Metal adaptation
+
+The reference application descends from Geant4's official `saxs` example,
+authored by Gianfranco Paternò (INFN and University of Ferrara). That example
+implements molecular-interference coherent scattering through
+`G4PenelopeRayleighModelMI`. The underlying tissue form-factor work was
+reported by Tartari, Taibi, Bonifazzi and Baraldi (2002), and the Geant4
+implementation and extended data set by Paternò, Cardarelli, Contillo,
+Gambaccini and Taibi (2018) and Paternò, Cardarelli, Gambaccini and Taibi
+(2020). Exact references and source links are listed in
+[PROVENANCE.md](docs/PROVENANCE.md).
+
+This repository adapts the Geant4 example for finite-box transport, detector
+image scoring and export of the cross-section and Penelope oscillator tables
+used by the CPU calculation. The Metal code is a separate implementation of
+the restricted numerical path: Philox random streams, analytic box navigation,
+interaction selection, molecular Rayleigh sampling, Penelope-like Compton
+final states and detector tallies. Geant4 remains the physics reference and
+table producer; no Geant4 kernel or geometry navigator runs on the GPU.
+
+## Experimental acceleration
+
+The project tests whether a checked, restricted X-ray diffraction transport
+problem can be repeated much faster on an Apple GPU. In the maintained
+100-million-history suite, the ratio of complete Geant4 to complete Metal
+process wall time is 185–314× on the recorded M4 Pro host. A separate
+20-million-history detector-image benchmark measured 400.5×, with Geant4
+writing CSV and Metal writing a raw image; serialization costs therefore
+differ in that comparison.
+
+These values are observations for the saved host, software versions, geometry,
+output mode and photon count. They are not a universal speed guarantee. Ratios
+near 300–400× occur for some supported jobs, while geometry complexity,
+startup, output format, photon count and hardware change the result. See
+[PERFORMANCE.md](docs/PERFORMANCE.md) for definitions, exact records and
+limitations.
 
 ## Quick start
 
