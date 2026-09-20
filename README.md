@@ -47,6 +47,19 @@ The 2-million-photon command is a **smoke comparison**, not a high-precision
 parity claim. The saved large-run records and their exact conditions are in
 [validation](docs/VALIDATION.md). `build/` and generated images are ignored.
 
+## Published example suite
+
+The [`examples/xrd_suite`](examples/xrd_suite) workflow runs matched Geant4
+and Metal calculations for pure water, fat and collagen; all three binary
+mixtures; two ternary compositions; and 10–100 mm thickness series. The
+maintained publication dataset uses 100 million independent photon histories
+per backend and case. It includes detector maps, azimuthal integrations,
+channel comparisons, timing and full-covariance profile parity tests.
+
+[Open the result gallery](examples/xrd_suite/results_100m/RESULTS.md).
+
+![Geant4 and Metal XRD profile overview](examples/xrd_suite/results_100m/profile_overview.png)
+
 ## Scope
 
 The model uses a finite homogeneous sample, a monochromatic photon source,

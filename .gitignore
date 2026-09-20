@@ -12,6 +12,10 @@ __pycache__/
 *.png
 *.pdf
 *.csv
+!examples/xrd_suite/results_100m/**/*.csv
+!examples/xrd_suite/results_100m/*.csv
+!examples/xrd_suite/results_100m/**/*.png
+!examples/xrd_suite/results_100m/*.png
 tutorial/saxs_keele/gpu_transport/multi_transport
 tutorial/saxs_keele/gpu_transport/single_rayleigh
 tutorial/saxs_keele/*.out

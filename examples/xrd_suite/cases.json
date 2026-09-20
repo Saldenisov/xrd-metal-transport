@@ -1,0 +1,17 @@
+{
+  "description": "Matched Geant4/Metal X-ray diffraction examples at 22.162917 keV and 150 mm mean-plane detector distance.",
+  "cases": [
+    {"name": "water_10mm", "group": "pure components", "thickness_mm": 10.0, "fractions": {"water": 1.0, "fat": 0.0, "collagen": 0.0}},
+    {"name": "water_50mm", "group": "pure components", "thickness_mm": 50.0, "fractions": {"water": 1.0, "fat": 0.0, "collagen": 0.0}},
+    {"name": "water_100mm", "group": "pure components", "thickness_mm": 100.0, "fractions": {"water": 1.0, "fat": 0.0, "collagen": 0.0}},
+    {"name": "fat_50mm", "group": "pure components", "thickness_mm": 50.0, "fractions": {"water": 0.0, "fat": 1.0, "collagen": 0.0}},
+    {"name": "collagen_50mm", "group": "pure components", "thickness_mm": 50.0, "fractions": {"water": 0.0, "fat": 0.0, "collagen": 1.0}},
+    {"name": "water_fat_50mm", "group": "binary mixtures", "thickness_mm": 50.0, "fractions": {"water": 0.5, "fat": 0.5, "collagen": 0.0}},
+    {"name": "water_collagen_50mm", "group": "binary mixtures", "thickness_mm": 50.0, "fractions": {"water": 0.5, "fat": 0.0, "collagen": 0.5}},
+    {"name": "fat_collagen_50mm", "group": "binary mixtures", "thickness_mm": 50.0, "fractions": {"water": 0.0, "fat": 0.5, "collagen": 0.5}},
+    {"name": "equal_ternary_50mm", "group": "ternary mixtures", "thickness_mm": 50.0, "fractions": {"water": 0.3333333333333333, "fat": 0.3333333333333333, "collagen": 0.3333333333333334}},
+    {"name": "g50_25mm", "group": "g50 thickness series", "thickness_mm": 25.0, "fractions": {"water": 0.385893, "fat": 0.510305, "collagen": 0.103802}},
+    {"name": "g50_50mm", "group": "g50 thickness series", "thickness_mm": 50.0, "fractions": {"water": 0.385893, "fat": 0.510305, "collagen": 0.103802}},
+    {"name": "g50_100mm", "group": "g50 thickness series", "thickness_mm": 100.0, "fractions": {"water": 0.385893, "fat": 0.510305, "collagen": 0.103802}}
+  ]
+}
