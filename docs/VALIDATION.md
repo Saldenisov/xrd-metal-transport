@@ -55,13 +55,18 @@ thickness series. The detector distance from the mean scattering plane is
 fixed at 150 mm while sample thickness varies.
 
 Eleven primary profile tests have p ≥ 0.05. The `g50_25mm` primary comparison
-has χ²/ν = 1.267 and p = 0.00246, although its integrated profile differs by
-−0.030% and all four channel counts differ by at most 1.04σ. A second
+has χ²/ν = 1.261 and p = 0.00288, although its integrated profile differs by
+−0.037% and all four channel counts differ by at most 1.04σ. A second
 100-million-history comparison with independent Geant4 and Metal seeds gives
-χ²/ν = 1.046 and p = 0.294, with channel differences below 0.89σ. The low
+χ²/ν = 1.036 and p = 0.331, with channel differences below 0.89σ. The low
 primary p-value therefore did not reproduce. Across the 12 primary cases, the
 largest channel difference is 2.62σ and integrated profile differences range
-from −0.219% to +0.324%.
+from −0.222% to +0.314%.
+
+The profile operator uses one temporary guard bin below and above the requested
+1–30 nm⁻¹ range. pyFAI's CSR builder otherwise clips radial underflow and
+overflow into the first and last bins, producing artificial edge jumps in a
+ring-sum profile. The two guard rows are discarded before profile statistics.
 
 These observations bound the tested compositions, energy and geometry. They
 do not establish exact equality of the samplers or validate a measured detector

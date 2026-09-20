@@ -51,6 +51,10 @@ equivalence. Metal currently implements a finite homogeneous box and ideal
 entrance-counting detector; see [`docs/ARCHITECTURE.md`](../../docs/ARCHITECTURE.md).
 
 The maintained dataset also contains an independent 100-million-history repeat
-of `g50_25mm`. It was added because the primary profile test gave p = 0.00246;
-the repeat gave p = 0.294 and did not reproduce the low value. See the bounded
+of `g50_25mm`. It was added because the primary profile test gave p = 0.00288;
+the repeat gave p = 0.331 and did not reproduce the low value. See the bounded
 interpretation in [`RESULTS.md`](results_100m/RESULTS.md).
+
+Radial sums use two temporary pyFAI guard bins outside the requested q range.
+The guard bins absorb CSR-clipped underflow and overflow and are discarded,
+preventing artificial jumps in the first and last published bins.

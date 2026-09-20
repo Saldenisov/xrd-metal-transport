@@ -9,6 +9,10 @@
   },
   "incident_photons_per_backend": 100000000,
   "geant4_threads": 7,
+  "geant4_seeds": [
+    550256,
+    770258
+  ],
   "metal_seed": 5910034,
   "geometry": {
     "detector_pixels": 1000,
@@ -26,10 +30,6 @@
   },
   "source_energy_kev": 22.162917,
   "mean_plane_detector_distance_mm": 150.0,
-  "geant4_seeds": [
-    550256,
-    770258
-  ],
   "component_table_sha256": "ad920cc226a1a209e9a464963be56c3cf6f944856f970beefe550a8505c5957f",
   "generated_form_factor_sha256": "3084158ce609d1c9aead9a2e55b3eec9a1f0f324115085f0d18557dcd4431e08"
 }

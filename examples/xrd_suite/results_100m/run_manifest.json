@@ -18,7 +18,21 @@
     "g50_50mm",
     "g50_100mm"
   ],
-  "git_commit": "4559cc6000352010e17ec67e68b4789ed93a7b40",
+  "git_commit": "035f5a09d42ac4466920d80b1a340c93cfe74431",
+  "environment": {
+    "geant4": "11.4.2 patch 2",
+    "g4emlow": "G4EMLOW8.8",
+    "python": "3.13.12",
+    "numpy": "1.26.4",
+    "scipy": "1.17.0",
+    "matplotlib": "3.10.8",
+    "pyfai": "2026.2.1",
+    "xrd_preprocessing": "0.1.9b1",
+    "macos": "26.6.2",
+    "architecture": "arm64",
+    "hardware": "MacBook Pro Mac16,7; Apple M4 Pro; 14 CPU cores; 48 GB RAM",
+    "swift": "Apple Swift 6.4"
+  },
   "completed_utc_date": "2026-09-20",
   "primary_histories_per_backend": 1200000000,
   "published_histories_per_backend_including_confirmatory_repeat": 1300000000,
@@ -31,18 +45,17 @@
     ],
     "metal_seed": 100910319
   },
-  "environment": {
-    "hardware": "MacBook Pro Mac16,7; Apple M4 Pro; 14 CPU cores; 48 GB RAM",
-    "macos": "26.6.2",
-    "architecture": "arm64",
-    "geant4": "11.4.2 patch 2",
-    "g4emlow": "G4EMLOW8.8",
-    "swift": "Apple Swift 6.4",
-    "python": "3.13.12",
-    "numpy": "1.26.4",
-    "scipy": "1.17.0",
-    "matplotlib": "3.10.8",
-    "pyfai": "2026.2.1",
-    "xrd_preprocessing": "0.1.9b1"
+  "radial_integration": {
+    "published_bins": 256,
+    "temporary_guard_bins": 2,
+    "q_range_nm_inv": [
+      1.0,
+      30.0
+    ],
+    "reason": "discard pyFAI CSR-clipped radial underflow and overflow"
+  },
+  "detector_arrays": {
+    "retained_locally": true,
+    "published": false
   }
 }
