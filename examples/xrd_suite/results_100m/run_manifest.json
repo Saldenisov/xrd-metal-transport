@@ -1,0 +1,48 @@
+{
+  "purpose": "Matched Geant4/Metal X-ray diffraction example suite",
+  "cases_file": "examples/xrd_suite/cases.json",
+  "photons_per_backend_per_case": 100000000,
+  "geant4_threads_per_case": 7,
+  "parallel_case_workers": 2,
+  "selected_cases": [
+    "water_10mm",
+    "water_50mm",
+    "water_100mm",
+    "fat_50mm",
+    "collagen_50mm",
+    "water_fat_50mm",
+    "water_collagen_50mm",
+    "fat_collagen_50mm",
+    "equal_ternary_50mm",
+    "g50_25mm",
+    "g50_50mm",
+    "g50_100mm"
+  ],
+  "git_commit": "4559cc6000352010e17ec67e68b4789ed93a7b40",
+  "completed_utc_date": "2026-09-20",
+  "primary_histories_per_backend": 1200000000,
+  "published_histories_per_backend_including_confirmatory_repeat": 1300000000,
+  "confirmatory_repeat": {
+    "case": "g50_25mm_seed2",
+    "photons_per_backend": 100000000,
+    "geant4_seeds": [
+      553771,
+      774153
+    ],
+    "metal_seed": 100910319
+  },
+  "environment": {
+    "hardware": "MacBook Pro Mac16,7; Apple M4 Pro; 14 CPU cores; 48 GB RAM",
+    "macos": "26.6.2",
+    "architecture": "arm64",
+    "geant4": "11.4.2 patch 2",
+    "g4emlow": "G4EMLOW8.8",
+    "swift": "Apple Swift 6.4",
+    "python": "3.13.12",
+    "numpy": "1.26.4",
+    "scipy": "1.17.0",
+    "matplotlib": "3.10.8",
+    "pyfai": "2026.2.1",
+    "xrd_preprocessing": "0.1.9b1"
+  }
+}

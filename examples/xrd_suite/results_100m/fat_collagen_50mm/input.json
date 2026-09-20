@@ -1,0 +1,35 @@
+{
+  "name": "fat_collagen_50mm",
+  "group": "binary mixtures",
+  "thickness_mm": 50.0,
+  "fractions": {
+    "water": 0.0,
+    "fat": 0.5,
+    "collagen": 0.5
+  },
+  "incident_photons_per_backend": 100000000,
+  "geant4_threads": 7,
+  "metal_seed": 7910040,
+  "geometry": {
+    "detector_pixels": 1000,
+    "pixel_pitch_um": 100.0,
+    "sample_thickness_mm": 50.0,
+    "sample_lateral_mm": 120.0,
+    "front_face_to_detector_mm": 175.0,
+    "mean_scattering_plane_to_detector_mm": 150.0,
+    "energy_kev": 22.162917,
+    "q_range_nm_inv": [
+      1.0,
+      30.0
+    ],
+    "radial_points": 256
+  },
+  "source_energy_kev": 22.162917,
+  "mean_plane_detector_distance_mm": 150.0,
+  "geant4_seeds": [
+    550330,
+    770340
+  ],
+  "component_table_sha256": "ad920cc226a1a209e9a464963be56c3cf6f944856f970beefe550a8505c5957f",
+  "generated_form_factor_sha256": "d9e6f33b7351db8edc9f77453e6cdf99aa7c606d9c986b2906f1eb18113bf04b"
+}

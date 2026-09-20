@@ -4,8 +4,10 @@
 from __future__ import annotations
 
 import argparse
+import importlib.metadata
 import json
 import os
+import platform
 import subprocess
 import sys
 from concurrent.futures import ProcessPoolExecutor, as_completed
@@ -16,6 +18,21 @@ ROOT = HERE.parents[1]
 sys.path.insert(0, str(HERE))
 
 from suite_common import GPU, G4_BINARY, load_cases, run_case  # noqa: E402
+
+
+def package_version(name: str) -> str:
+    try:
+        return importlib.metadata.version(name)
+    except importlib.metadata.PackageNotFoundError:
+        return "not installed"
+
+
+def recorded_path(path: Path) -> str:
+    resolved = path.resolve()
+    try:
+        return str(resolved.relative_to(ROOT))
+    except ValueError:
+        return str(resolved)
 
 
 def parse_args() -> argparse.Namespace:
@@ -59,7 +76,7 @@ def main() -> None:
     args.output.mkdir(parents=True, exist_ok=True)
     run_manifest = {
         "purpose": "Matched Geant4/Metal X-ray diffraction example suite",
-        "cases_file": str(args.cases),
+        "cases_file": recorded_path(args.cases),
         "photons_per_backend_per_case": args.photons,
         "geant4_threads_per_case": args.threads_per_case,
         "parallel_case_workers": args.workers,
@@ -67,6 +84,18 @@ def main() -> None:
         "git_commit": subprocess.check_output(
             ["git", "rev-parse", "HEAD"], cwd=ROOT, text=True
         ).strip(),
+        "environment": {
+            "geant4": "11.4.2",
+            "g4emlow": Path(os.environ["G4LEDATA"]).name,
+            "python": platform.python_version(),
+            "numpy": package_version("numpy"),
+            "scipy": package_version("scipy"),
+            "matplotlib": package_version("matplotlib"),
+            "pyfai": package_version("pyFAI"),
+            "xrd_preprocessing": package_version("xrd-preprocessing"),
+            "macos": platform.mac_ver()[0],
+            "architecture": platform.machine(),
+        },
     }
     (args.output / "run_manifest.json").write_text(
         json.dumps(run_manifest, indent=2) + "\n"

@@ -46,6 +46,28 @@ Its absolute scale is therefore undetermined. The joblib itself is not
 redistributed. The [summary](../tutorial/saxs_keele/gpu_transport/results/colleague_water_cpu_gpu_50m/summary.json)
 records the assumptions and profile metrics.
 
+## Published 100-million-history composition suite
+
+The public example suite contains 12 primary comparisons with 100 million
+incident histories per backend and case: pure water, fat and collagen; all
+three 50/50 binary mixtures; an equal ternary mixture; and water and g50
+thickness series. The detector distance from the mean scattering plane is
+fixed at 150 mm while sample thickness varies.
+
+Eleven primary profile tests have p ≥ 0.05. The `g50_25mm` primary comparison
+has χ²/ν = 1.267 and p = 0.00246, although its integrated profile differs by
+−0.030% and all four channel counts differ by at most 1.04σ. A second
+100-million-history comparison with independent Geant4 and Metal seeds gives
+χ²/ν = 1.046 and p = 0.294, with channel differences below 0.89σ. The low
+primary p-value therefore did not reproduce. Across the 12 primary cases, the
+largest channel difference is 2.62σ and integrated profile differences range
+from −0.219% to +0.324%.
+
+These observations bound the tested compositions, energy and geometry. They
+do not establish exact equality of the samplers or validate a measured detector
+response. Full tables, covariance tests and figures are in
+[`examples/xrd_suite/results_100m`](../examples/xrd_suite/results_100m/RESULTS.md).
+
 ## Timing and remaining tests
 
 For the changed 50 mm mixture, Geant4 took 33.66 s on 14 CPU threads;

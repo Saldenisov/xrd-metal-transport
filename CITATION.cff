@@ -1,0 +1,15 @@
+cff-version: 1.2.0
+message: "If you use this software, cite this repository and the scientific sources listed in docs/PROVENANCE.md."
+title: "XRD photon transport on Apple Metal"
+type: software
+authors:
+  - family-names: Denisov
+    given-names: Sergey
+repository-code: "https://github.com/Saldenisov/xrd-metal-transport"
+url: "https://github.com/Saldenisov/xrd-metal-transport"
+date-released: 2026-09-20
+keywords:
+  - X-ray diffraction
+  - Geant4
+  - Apple Metal
+  - Monte Carlo photon transport

@@ -1,0 +1,35 @@
+{
+  "name": "water_10mm",
+  "group": "pure components",
+  "thickness_mm": 10.0,
+  "fractions": {
+    "water": 1.0,
+    "fat": 0.0,
+    "collagen": 0.0
+  },
+  "incident_photons_per_backend": 100000000,
+  "geant4_threads": 7,
+  "metal_seed": 910019,
+  "geometry": {
+    "detector_pixels": 1000,
+    "pixel_pitch_um": 100.0,
+    "sample_thickness_mm": 10.0,
+    "sample_lateral_mm": 120.0,
+    "front_face_to_detector_mm": 155.0,
+    "mean_scattering_plane_to_detector_mm": 150.0,
+    "energy_kev": 22.162917,
+    "q_range_nm_inv": [
+      1.0,
+      30.0
+    ],
+    "radial_points": 256
+  },
+  "source_energy_kev": 22.162917,
+  "mean_plane_detector_distance_mm": 150.0,
+  "geant4_seeds": [
+    550071,
+    770053
+  ],
+  "component_table_sha256": "ad920cc226a1a209e9a464963be56c3cf6f944856f970beefe550a8505c5957f",
+  "generated_form_factor_sha256": "9332854ac14f4663b1f333529fa28a0d652d935c6f98ae98da6079d202bf26c7"
+}

@@ -1,19 +1,21 @@
-# Checks before public release
+# Public release and reuse status
 
-- Confirm ownership and redistribution rights for the Keele six-column
-  `data/xrd_components.txt` and the derived `keele_*.dat` MIFF files. If
-  rights are limited, replace them with licensed public examples and keep
-  private validation tables outside the public repository.
-- Select a license for original Swift, Metal and Python additions. Preserve
-  Geant4 headers, the full `GEANT4_LICENSE` and its required attribution
-  notice for the copied/adapted SAXS example. Check whether any further
-  license notices apply to redistributed data.
-- Decide authorship and citation metadata; no software DOI or journal claim
-  has been assigned.
-- Rerun an independent high-statistics water reference with a retained
-  profile covariance and resolve or bound the −0.229% direct-channel residual.
-- Record Geant4, G4EMLOW, Swift, macOS, pyFAI and XRD-preprocessing versions,
-  source commit, seed policy, host model and wall-clock timing conditions in
-  a release manifest.
-- Review the historical JSON records for private paths and verify that no
-  patient-level or confidential colleague material is present.
+The public repository supports scientific review and exact reruns of the
+included examples. Public visibility does not itself grant a reuse license.
+
+- Copied and adapted Geant4 SAXS files retain their headers and are distributed
+  under `GEANT4_LICENSE` with the required attribution.
+- No separate license is granted for original Swift, Metal and Python files.
+- No separate license is granted for `data/xrd_components.txt` or derived
+  `keele_*.dat` molecular-interference form-factor tables. Their scientific
+  provenance is documented in `PROVENANCE.md`. Contact the repository owner
+  before redistribution or incorporation into another work.
+- `CITATION.cff` records software authorship and the repository citation. No
+  software DOI or associated journal publication is claimed.
+- The maintained example manifest records source commit, seeds, software
+  versions, host class and timing conditions. Each case records input hashes.
+- Generated summaries contain no patient data. The colleague-supplied joblib
+  used for one historical comparison is not distributed.
+
+The unresolved physics limits in `VALIDATION.md` remain part of the release.
+Public availability does not change their interpretation.

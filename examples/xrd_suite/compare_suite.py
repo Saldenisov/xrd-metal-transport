@@ -63,7 +63,7 @@ def write_summary(root: Path, results: list[tuple[dict, np.ndarray]]) -> None:
             "max_abs_channel_z": max(map(abs, summary["channel_poisson_z"].values())),
         })
     with (root / "summary.csv").open("w", newline="") as stream:
-        writer = csv.DictWriter(stream, fieldnames=fields)
+        writer = csv.DictWriter(stream, fieldnames=fields, lineterminator="\n")
         writer.writeheader()
         writer.writerows(rows)
     (root / "summary.json").write_text(json.dumps(rows, indent=2) + "\n")
@@ -90,6 +90,39 @@ def write_summary(root: Path, results: list[tuple[dict, np.ndarray]]) -> None:
             f"{row['profile_p_value']:.3g} | "
             f"[plot]({row['case']}/detector_comparison.png) |"
         )
+    p_values = [row["profile_p_value"] for row in rows]
+    speedups = [row["wall_speedup"] for row in rows]
+    integrated = [100 * row["profile_integrated_relative_difference"] for row in rows]
+    max_channel_z = max(row["max_abs_channel_z"] for row in rows)
+    lowest = min(rows, key=lambda row: row["profile_p_value"])
+    lines += [
+        "", "## Interpretation", "",
+        f"{sum(value >= 0.05 for value in p_values)}/{len(rows)} primary profile tests "
+        f"have p ≥ 0.05. The lowest value is `{lowest['case']}` at "
+        f"p = {lowest['profile_p_value']:.3g}; its four channel differences are "
+        f"within {lowest['max_abs_channel_z']:.2f}σ and its integrated profile "
+        f"difference is {100 * lowest['profile_integrated_relative_difference']:.3f}%.",
+        "",
+        f"Across the {len(rows)} primary cases, the largest absolute channel difference is "
+        f"{max_channel_z:.2f}σ, integrated profile differences span "
+        f"{min(integrated):.3f}% to {max(integrated):.3f}%, and observed wall-time "
+        f"speedups span {min(speedups):.0f}× to {max(speedups):.0f}×. These are "
+        "descriptive results for this hardware and model, not universal performance "
+        "or equivalence claims.",
+        "",
+    ]
+    replicate_path = root / "replicates" / "g50_25mm_seed2" / "summary.json"
+    if replicate_path.exists():
+        replicate = json.loads(replicate_path.read_text())
+        replicate_z = max(map(abs, replicate["channel_poisson_z"].values()))
+        lines += [
+            "An independent 100-million-history `g50_25mm` repeat with new "
+            f"Geant4 and Metal seeds gives p = "
+            f"{replicate['profile']['chi2_p_value']:.3g}, with all four channels "
+            f"within {replicate_z:.2f}σ. The low primary p-value did not reproduce.",
+            "",
+            "[Open the independent `g50_25mm` repeat](replicates/g50_25mm_seed2/detector_comparison.png).",
+        ]
     lines += [
         "", "![Profile overview](profile_overview.png)", "",
         "![Parity overview](parity_overview.png)", "",

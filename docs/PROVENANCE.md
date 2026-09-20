@@ -14,7 +14,7 @@ and must not be represented as the original Geant4 toolkit.
 | `gpu_transport/Metal` | Original Metal implementation for this project. Its shell-aware Compton final-state equations were translated from [Geant4 11.4.2 `G4PenelopeComptonModel.cc`](https://github.com/Geant4/geant4/blob/v11.4.2/source/processes/electromagnetic/lowenergy/src/G4PenelopeComptonModel.cc). Its parallel independent-history architecture was informed by [FDA MC-GPU v1.3](https://github.com/DIDSR/MCGPU), but the MC-GPU CUDA source and its PENELOPE-2006 shell tables were not copied. Molecular Rayleigh uses the Keele MIFF, not MC-GPU's atomic tables. |
 | Philox4x32-10 implementation | Algorithm and known-answer vectors from [Random123](https://github.com/DEShawResearch/random123); see `philox_metal_kat.swift`. |
 | Radial profile integration | External [XRD-preprocessing](https://github.com/Eos-Dx/XRD-preprocessing) and [pyFAI](https://github.com/silx-kit/pyFAI), called consistently for both detector images. |
-| `data/xrd_components.txt` and `tutorial/saxs_keele/data/keele_*.dat` | Keele project input and derived MIFF files. Public redistribution rights and exact source attribution require review before release. |
+| `data/xrd_components.txt` and `tutorial/saxs_keele/data/keele_*.dat` | Keele project input and derived MIFF files used for scientific reproduction. The repository grants no separate reuse license for these tables; consult the owner before redistribution. |
 | `data/pure_cross_sections.json` | Six-node pure-component photoelectric, Compton and Rayleigh tables exported by this project's Geant4 11.4.2 SAXS application; the original console logs are not distributed. |
 
 For a file-by-file comparison of the modified SAXS application against the

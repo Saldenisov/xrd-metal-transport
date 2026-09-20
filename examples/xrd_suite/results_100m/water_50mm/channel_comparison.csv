@@ -1,0 +1,5 @@
+channel,relative_difference_metal_over_geant4_minus_1
+direct,-0.0009692409216724984
+single_rayleigh,0.00034315519765737434
+multiple_rayleigh,-0.006034253261158917
+compton,7.763889042933236e-05

@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import csv
+import hashlib
 import json
 import os
 import re
@@ -45,6 +46,14 @@ PIXELS = 1000
 PITCH_MM = 0.1
 RADIAL_POINTS = 256
 Q_RANGE = (1.0, 30.0)
+
+
+def sha256_file(path: Path) -> str:
+    return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def geant4_seeds(case_index: int) -> list[int]:
+    return [550_071 + case_index * 37, 770_053 + case_index * 41]
 
 
 def load_cases(path: Path) -> list[dict]:
@@ -281,7 +290,7 @@ def _plot_case(output: Path, case: dict, geometry: SlabDetectorGeometry,
     plt.close(fig)
 
     with (output / "channel_comparison.csv").open("w", newline="") as stream:
-        writer = csv.writer(stream)
+        writer = csv.writer(stream, lineterminator="\n")
         writer.writerow(("channel", "relative_difference_metal_over_geant4_minus_1"))
         writer.writerows(channel_relative.items())
 
@@ -303,18 +312,21 @@ def run_case(case: dict, case_index: int, photons: int, threads: int,
         **case,
         "incident_photons_per_backend": photons,
         "geant4_threads": threads,
+        "geant4_seeds": geant4_seeds(case_index),
         "metal_seed": seed,
         "geometry": manifest,
         "source_energy_kev": ENERGY_KEV,
         "mean_plane_detector_distance_mm": MEAN_DETECTOR_DISTANCE_MM,
+        "component_table_sha256": sha256_file(ROOT / "data" / "xrd_components.txt"),
     }
-    (output / "input.json").write_text(json.dumps(input_record, indent=2) + "\n")
 
     started = time.perf_counter()
     with tempfile.TemporaryDirectory(prefix=f"xrd_suite_{case['name']}_") as temporary:
         scratch = Path(temporary)
         form_factor = scratch / "form_factor.dat"
         np.savetxt(form_factor, trial_miff(case["fractions"]), fmt="%.12e")
+        input_record["generated_form_factor_sha256"] = sha256_file(form_factor)
+        (output / "input.json").write_text(json.dumps(input_record, indent=2) + "\n")
         g4_image, g4_channels, physics, g4_seconds = run_geant4(
             case, geometry, photons, threads, form_factor, scratch, case_index,
         )
@@ -387,7 +399,7 @@ def run_case(case: dict, case_index: int, photons: int, threads: int,
         ],
     }
     with (output / "profiles.csv").open("w", newline="") as stream:
-        writer = csv.writer(stream)
+        writer = csv.writer(stream, lineterminator="\n")
         writer.writerow(("q_nm_inv", "geant4_sum", "metal_sum", "bin_z"))
         writer.writerows(zip(q_g4, profile_g4, profile_metal, parity["bin_z"]))
     _plot_case(

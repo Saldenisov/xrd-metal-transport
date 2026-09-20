@@ -1,0 +1,35 @@
+{
+  "name": "g50_50mm",
+  "group": "g50 thickness series",
+  "thickness_mm": 50.0,
+  "fractions": {
+    "water": 0.385893,
+    "fat": 0.510305,
+    "collagen": 0.103802
+  },
+  "incident_photons_per_backend": 100000000,
+  "geant4_threads": 7,
+  "metal_seed": 10910049,
+  "geometry": {
+    "detector_pixels": 1000,
+    "pixel_pitch_um": 100.0,
+    "sample_thickness_mm": 50.0,
+    "sample_lateral_mm": 120.0,
+    "front_face_to_detector_mm": 175.0,
+    "mean_scattering_plane_to_detector_mm": 150.0,
+    "energy_kev": 22.162917,
+    "q_range_nm_inv": [
+      1.0,
+      30.0
+    ],
+    "radial_points": 256
+  },
+  "source_energy_kev": 22.162917,
+  "mean_plane_detector_distance_mm": 150.0,
+  "geant4_seeds": [
+    550441,
+    770463
+  ],
+  "component_table_sha256": "ad920cc226a1a209e9a464963be56c3cf6f944856f970beefe550a8505c5957f",
+  "generated_form_factor_sha256": "dfebd15683f4fc3d40746db208f52a5bf1bb85da92411ade420ae4bb1fdf1fc6"
+}

@@ -70,6 +70,7 @@ Rayleigh sampler uses a tabulated angular CDF rather than Geant4's RITA
 sampler. High-statistics residuals remain unresolved. No clinical or dose
 equivalence is claimed.
 
-The repository is being prepared for a later public release. Before that
-release, confirm redistribution rights for `data/xrd_components.txt` and
-derived Keele form-factor files; see [release checks](docs/RELEASE.md).
+The repository is public for review and reproduction. The adapted Geant4 files
+remain under the Geant4 Software License. No separate reuse license is granted
+for the original Swift, Metal and Python additions or the Keele input tables;
+see [release and data status](docs/RELEASE.md).

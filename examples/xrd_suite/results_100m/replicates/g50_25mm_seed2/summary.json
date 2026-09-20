@@ -1,0 +1,79 @@
+{
+  "case": "g50_25mm_seed2",
+  "group": "confirmatory replicate",
+  "model": "X-ray diffraction; finite homogeneous sample and ideal detector",
+  "mass_fractions_water_fat_collagen": {
+    "water": 0.385893,
+    "fat": 0.510305,
+    "collagen": 0.103802
+  },
+  "geometry": {
+    "detector_pixels": 1000,
+    "pixel_pitch_um": 100.0,
+    "sample_thickness_mm": 25.0,
+    "sample_lateral_mm": 120.0,
+    "front_face_to_detector_mm": 162.5,
+    "mean_scattering_plane_to_detector_mm": 150.0,
+    "energy_kev": 22.162917,
+    "q_range_nm_inv": [
+      1.0,
+      30.0
+    ],
+    "radial_points": 256
+  },
+  "incident_photons_per_backend": 100000000,
+  "geant4_seconds_wall": 227.53004908398725,
+  "metal_seconds_wall": 1.1887877499684691,
+  "wall_speedup": 191.39669725737176,
+  "geant4_counts": {
+    "direct": 28667983,
+    "single_rayleigh": 1994419,
+    "multiple_rayleigh": 75475,
+    "compton": 588605
+  },
+  "metal_counts": {
+    "direct": 28665725,
+    "single_rayleigh": 1996187,
+    "multiple_rayleigh": 75672,
+    "compton": 588652
+  },
+  "channel_relative_difference": {
+    "direct": -7.876382513549718e-05,
+    "single_rayleigh": 0.0008864737048734916,
+    "multiple_rayleigh": 0.0026101358065584446,
+    "compton": 7.984981439168592e-05
+  },
+  "channel_poisson_z": {
+    "direct": -0.298207747597603,
+    "single_rayleigh": 0.8850398689580667,
+    "multiple_rayleigh": 0.506718149888149,
+    "compton": 0.04331738361534286
+  },
+  "profile": {
+    "bins": 256,
+    "covariance_rank": 256,
+    "chi2": 267.7478330274245,
+    "reduced_chi2": 1.045889972763377,
+    "chi2_p_value": 0.29432020144663745,
+    "max_abs_bin_z": 2.77966520526816,
+    "mean_bin_z": 0.08862418877737753,
+    "integrated_relative_difference": 0.0011249283663223864,
+    "q_min_nm_inv": 1.0566406319849193,
+    "q_max_nm_inv": 29.943362944293767,
+    "normalized_shape_relative_l2_2_to_28_nm_inv": 0.012047065088711829,
+    "normalized_shape_correlation_2_to_28_nm_inv": 0.9996754401349995
+  },
+  "metal_device": "Apple M4 Pro",
+  "metal_seed": 100910319,
+  "effective_distance_mm": 150.0,
+  "same_effective_distance": true,
+  "roots_retained": 0,
+  "detector_arrays_retained": false,
+  "elapsed_seconds": 229.58336283295648,
+  "limitations": [
+    "ideal entrance-counting detector",
+    "homogeneous finite rectangular sample",
+    "Metal Rayleigh CDF differs numerically from Geant4 RITA",
+    "no electron transport or fluorescence in Metal"
+  ]
+}
