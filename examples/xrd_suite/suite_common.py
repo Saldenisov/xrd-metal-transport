@@ -32,7 +32,7 @@ from check_trial_xs import trial_miff  # noqa: E402
 from geometry import SlabDetectorGeometry  # noqa: E402
 from metal_forward import PHYSICS_22  # noqa: E402
 from prepare_keele_ff import mixture_material  # noqa: E402
-from profile_integration import integrate_image  # noqa: E402
+from profile_integration import guarded_radial_spec, integrate_image  # noqa: E402
 from validate_water_100mm_cpu_metal import (  # noqa: E402
     CHANNELS,
     profile_parity,
@@ -175,20 +175,24 @@ def pyfai_operator(manifest: dict) -> tuple[np.ndarray, csr_matrix]:
     integrator = _integrator_from_dataframe(
         pitch_m, pixels / 2, pixels / 2, wavelength_nm * 10, distance_mm
     )
+    points = int(manifest["radial_points"])
+    guarded_points, guarded_range = guarded_radial_spec(
+        points, tuple(manifest["q_range_nm_inv"])
+    )
     result = integrator.integrate1d(
         np.zeros((pixels, pixels), dtype=np.float32),
-        int(manifest["radial_points"]),
+        guarded_points,
         unit="q_nm^-1",
-        radial_range=tuple(manifest["q_range_nm_inv"]),
+        radial_range=guarded_range,
         error_model="poisson",
         correctSolidAngle=False,
     )
     engine = integrator.engines[result.method].engine
-    weights = csr_matrix(
+    guarded_weights = csr_matrix(
         (engine.data, engine.indices, engine.indptr),
-        shape=(int(manifest["radial_points"]), pixels * pixels),
+        shape=(guarded_points, pixels * pixels),
     )
-    return np.asarray(result.radial), weights
+    return np.asarray(result.radial)[1:-1], guarded_weights[1:-1]
 
 
 def run_geant4(case: dict, geometry: SlabDetectorGeometry, photons: int,

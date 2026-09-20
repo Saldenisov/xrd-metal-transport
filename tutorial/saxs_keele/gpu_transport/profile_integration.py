@@ -9,9 +9,20 @@ from xrd_preprocessing import AzimuthalIntegration
 HC_KEV_NM = 1.2398419843320026
 
 
+def guarded_radial_spec(points: int, q_range: tuple[float, float]) -> tuple[int, tuple[float, float]]:
+    """Add one overflow bin at each edge for pyFAI CSR integration."""
+    q_min, q_max = map(float, q_range)
+    width = (q_max - q_min) / points
+    return points + 2, (q_min - width, q_max + width)
+
+
 def integrate_image(image: np.ndarray, geometry: dict) -> tuple[np.ndarray, np.ndarray, float]:
     """Return q, count-space radial sums and corrected distance in mm."""
     pixels = int(geometry["detector_pixels"])
+    points = int(geometry["radial_points"])
+    guarded_points, guarded_range = guarded_radial_spec(
+        points, tuple(geometry["q_range_nm_inv"])
+    )
     frame = pd.DataFrame([{
         "measurement_data": image,
         "calculated_distance": geometry["front_face_to_detector_mm"] * 1e-3,
@@ -19,13 +30,13 @@ def integrate_image(image: np.ndarray, geometry: dict) -> tuple[np.ndarray, np.n
         "center": (pixels / 2.0, pixels / 2.0),
         "wavelength": HC_KEV_NM / geometry["energy_kev"],
         "sample_thickness_mm": geometry["sample_thickness_mm"],
-        "interpolation_q_range": tuple(geometry["q_range_nm_inv"]),
+        "interpolation_q_range": guarded_range,
     }])
     output = AzimuthalIntegration(
         column="measurement_data",
         output_column="radial_profile_data",
         q_range_column="q_range",
-        npt=int(geometry["radial_points"]),
+        npt=guarded_points,
         mode="1D",
         calibration_mode="dataframe",
         error_model="poisson",
@@ -38,9 +49,10 @@ def integrate_image(image: np.ndarray, geometry: dict) -> tuple[np.ndarray, np.n
     distance_mm = float(output["calculated_distance"]) * 1000.0
     if not np.isclose(distance_mm, geometry["mean_scattering_plane_to_detector_mm"], atol=1e-6):
         raise AssertionError("XRD-preprocessing thickness correction mismatch")
-    q = np.asarray(output["q_range"], dtype=float)
-    counts = np.asarray(output["radial_sum_signal"], dtype=float)
+    # pyFAI's CSR builder clips radial underflow and overflow into its two edge
+    # bins. The guard bins absorb those contributions and are discarded here.
+    q = np.asarray(output["q_range"], dtype=float)[1:-1]
+    counts = np.asarray(output["radial_sum_signal"], dtype=float)[1:-1]
     if counts.shape != q.shape:
         raise AssertionError("XRD-preprocessing did not return 1D ring sums")
     return q, counts, distance_mm
-
