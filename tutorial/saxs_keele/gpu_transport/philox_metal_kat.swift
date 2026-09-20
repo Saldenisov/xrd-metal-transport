@@ -1,6 +1,6 @@
 // Metal known-answer test for Philox4x32-10, from D. E. Shaw Research
 // Random123 test vectors (https://github.com/DEShawResearch/random123).
-// This standalone test does not yet change multi_transport.swift.
+// This standalone test checks the transformation used in Metal/Random.metal.
 //
 // Copyright 2010-2012, D. E. Shaw Research. All rights reserved.
 // Redistribution and use in source and binary forms, with or without

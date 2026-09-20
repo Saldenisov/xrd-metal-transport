@@ -9,6 +9,7 @@ from pathlib import Path
 
 import numpy as np
 import pytest
+from scipy.sparse import csr_matrix
 
 HERE = Path(__file__).resolve().parent
 METAL = HERE / "multi_transport"
@@ -20,6 +21,7 @@ sys.path.insert(0, str(HERE))
 from diagnose_transport_ablation import (DEFAULT_PHYSICS, run_geant4 as run_g4_ablation,
                                            run_metal as run_metal_ablation)  # noqa: E402
 from metal_forward import BASELINE_FRACTIONS, PHYSICS_30, composition_compton_shells  # noqa: E402
+from metal_radial import write_radial_map  # noqa: E402
 from validate_water_100mm_cpu_metal import G4  # noqa: E402
 
 
@@ -157,6 +159,35 @@ def test_philox_histories_reproduce_with_same_key(tmp_path: Path) -> None:
     third_image = np.fromfile(tmp_path / "image.raw", dtype=np.uint32)
     assert first["classes"] != third["classes"]
     assert not np.array_equal(first_image, third_image)
+
+
+def test_gpu_radial_reduction_matches_the_detector_image(tmp_path: Path) -> None:
+    photons = 100_000
+    image_summary = run_channel_case(
+        tmp_path, phot=0.0, compt=0.0, rayl=0.0, photons=photons,
+    )
+    image = np.fromfile(tmp_path / "image.raw", dtype=np.uint32).reshape(1000, 1000)
+    pixels = image.size
+    selected = np.arange(499_450, 499_550)
+    rows = np.repeat([0, 1], 50)
+    weights = np.r_[np.ones(50), np.full(50, 0.5)]
+    operator = csr_matrix((weights, (rows, selected)), shape=(2, pixels))
+    direct_mask = np.zeros(image.shape, dtype=bool)
+    direct_mask.ravel()[selected[::3]] = True
+    map_path = tmp_path / "radial_map.bin"
+    write_radial_map(operator, direct_mask, map_path)
+
+    command = [
+        str(METAL), str(photons), "10", "100", "50", "0.1", "0.05",
+        "1000000000", "1", "1", "1", "1", "900007",
+        str(tmp_path / "physics.json"), str(MIFF), "--radial", str(map_path),
+        str(tmp_path / "radial.raw"),
+    ]
+    radial_summary = json.loads(subprocess.check_output(command, text=True))
+    radial = np.fromfile(tmp_path / "radial.raw", dtype=np.float64)
+    np.testing.assert_array_equal(radial, operator @ image.ravel())
+    assert radial_summary["classes"] == image_summary["classes"]
+    assert radial_summary["direct_count"] == int(image[direct_mask].sum())
 
 
 def test_philox_metal_known_answers(tmp_path: Path) -> None:

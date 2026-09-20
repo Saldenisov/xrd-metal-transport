@@ -13,6 +13,13 @@ source /path/to/geant4-install/bin/geant4.sh
 ./scripts/build.sh
 ```
 
+Inspect GPUs and select one when several Metal devices are available:
+
+```bash
+tutorial/saxs_keele/gpu_transport/multi_transport --list-devices
+export KEELE_METAL_DEVICE_INDEX=0
+```
+
 ## 1. Inspect and convert material form factors
 
 ```bash
@@ -94,3 +101,15 @@ python3 tutorial/saxs_keele/gpu_transport/compare_colleague_water_cpu_gpu.py \
 The private joblib is deliberately absent. Its detector geometry and flux
 are incompletely specified; see [validation](VALIDATION.md) before
 interpreting agreement with this reference.
+
+## 7. GPU-side radial output
+
+`metal_radial.py` serializes a frozen sparse pyFAI operator and invokes the
+same transport kernel with `--radial map.bin radial.raw`. This path returns
+radial sums directly and avoids copying one packed result per photon to the
+CPU. Keep image mode for detector-level validation; use radial mode for
+repeated inverse-model trials after the operator and detector mask are frozen.
+
+The reducer is exact for operators with at most three nonzero bin links per
+pixel, matching the tested pyFAI pixel-splitting operator. Its output has been
+checked against multiplication of the same operator by the full Metal image.

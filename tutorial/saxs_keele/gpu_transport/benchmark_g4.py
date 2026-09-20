@@ -18,6 +18,8 @@ import matplotlib.pyplot as plt
 import numpy as np
 import uproot
 
+from geometry import SlabDetectorGeometry
+
 if __package__:
     from .benchmark import DEFAULT_FF, HERE, MU_AIR
 else:
@@ -34,8 +36,15 @@ def make_macro(case: dict[str, str], photons: int, output: Path) -> str:
     radius = float(case["beam_radius_mm"])
     focus = float(case["focus_from_entry_mm"])
     density = 0.9794738076 * float(case["density_scale"])
-    entry = 100 - thickness / 2
-    detector_distance = thickness / 2 + gap + 0.15
+    geometry = SlabDetectorGeometry(
+        sample_thickness_mm=thickness,
+        sample_lateral_mm=120.0,
+        downstream_air_mm=gap,
+        detector_pixels=1000,
+        pixel_pitch_mm=0.1,
+        beam_radius_mm=radius,
+        focus_from_entry_mm=focus,
+    )
     return f"""/random/setSeeds {550071 + int(case['case']) * 37} {770053 + int(case['case']) * 41}
 /det/setCustomMatDensity {density:.12g}
 /det/setCustomMatHmassfract 0.1074785105
@@ -44,14 +53,7 @@ def make_macro(case: dict[str, str], photons: int, output: Path) -> str:
 /det/setCustomMatOmassfract 0.4054867761
 /det/SetCustomMatFF data/keele_breast_g50.dat
 /det/setPhantomMaterial 30
-/det/setPhantomBox true
-/det/setPhantomDiameter {thickness:.12g} mm
-/det/setPhantomHeight 120. mm
-/det/setPhantomZ 100. mm
-/det/setSlits false
-/det/setDetectorSize 141.421356 mm
-/det/setDetectorThickness 0.3 mm
-/det/setDetectorSampleDistance {detector_distance:.12g} mm
+{geometry.geant4_detector_commands()}
 /phys/SelectPhysicsList empenelopeMI
 /run/setCut 0.01 mm
 /run/verbose 0
@@ -61,12 +63,7 @@ def make_macro(case: dict[str, str], photons: int, output: Path) -> str:
 /gps/particle gamma
 /gps/ene/type Mono
 /gps/ene/mono 22.162917 keV
-/gps/pos/type Plane
-/gps/pos/shape Circle
-/gps/pos/radius {radius:.12g} mm
-/gps/pos/centre 0. 0. {entry - 0.1:.12g} mm
-/gps/ang/type focused
-/gps/ang/focuspoint 0. 0. {entry + focus:.12g} mm
+{geometry.geant4_source_commands()}
 /run/beamOn {photons}
 """
 

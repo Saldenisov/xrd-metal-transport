@@ -8,7 +8,7 @@ cmake -S "$root/tutorial/saxs_keele" -B "$root/build/saxs_keele" \
 cmake --build "$root/build/saxs_keele" -j "$(sysctl -n hw.ncpu)"
 
 swiftc -O -framework Metal \
-  "$root/tutorial/saxs_keele/gpu_transport/multi_transport.swift" \
+  "$root"/tutorial/saxs_keele/gpu_transport/Sources/MetalTransport/*.swift \
   -o "$root/tutorial/saxs_keele/gpu_transport/multi_transport"
 swiftc -O -framework Metal \
   "$root/tutorial/saxs_keele/gpu_transport/single_rayleigh.swift" \

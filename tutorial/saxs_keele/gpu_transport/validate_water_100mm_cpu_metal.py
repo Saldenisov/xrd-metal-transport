@@ -24,6 +24,8 @@ from scipy.sparse import csr_matrix
 from scipy.stats import chi2
 from xrd_preprocessing.azimuthal import _integrator_from_dataframe
 
+from geometry import SlabDetectorGeometry
+
 HERE = Path(__file__).resolve().parent
 SOURCE = HERE.parent
 BUILD = HERE.parents[2] / "build" / "saxs_keele"
@@ -34,22 +36,23 @@ WATER_PHYSICS = HERE / "results" / "multi_transport" / "water_22p022_physics.jso
 from profile_integration import integrate_image
 
 ENERGY_KEV = 22.0220601
-THICKNESS_MM = 100.0
-GAP_MM = 100.0
-PIXELS = 1000
-PITCH_UM = 100.0
 NPT = 200
-MANIFEST = {
-    "detector_pixels": PIXELS,
-    "pixel_pitch_um": PITCH_UM,
-    "sample_thickness_mm": THICKNESS_MM,
-    "sample_lateral_mm": 120.0,
-    "front_face_to_detector_mm": THICKNESS_MM + GAP_MM,
-    "mean_scattering_plane_to_detector_mm": GAP_MM + THICKNESS_MM / 2,
-    "energy_kev": ENERGY_KEV,
-    "q_range_nm_inv": [1.0, 30.0],
-    "radial_points": NPT,
-}
+GEOMETRY = SlabDetectorGeometry(
+    sample_thickness_mm=100.0,
+    sample_lateral_mm=120.0,
+    downstream_air_mm=100.0,
+    detector_pixels=1000,
+    pixel_pitch_mm=0.1,
+    beam_radius_mm=0.05,
+    focus_from_entry_mm=None,
+)
+THICKNESS_MM = GEOMETRY.sample_thickness_mm
+GAP_MM = GEOMETRY.downstream_air_mm
+PIXELS = GEOMETRY.detector_pixels
+PITCH_UM = GEOMETRY.pixel_pitch_mm * 1000
+MANIFEST = GEOMETRY.manifest(
+    energy_kev=ENERGY_KEV, q_range_nm_inv=(1.0, 30.0), radial_points=NPT,
+)
 CHANNELS = ("direct", "single_rayleigh", "multiple_rayleigh", "compton")
 
 
@@ -64,14 +67,7 @@ def geant4_macro(output: Path, photons: int, run_index: int) -> str:
 /det/setCustomMatOmassfract 0.888100000000
 /det/SetCustomMatFF data/keele_water.dat
 /det/setPhantomMaterial 30
-/det/setPhantomBox true
-/det/setPhantomDiameter 100. mm
-/det/setPhantomHeight 120. mm
-/det/setPhantomZ 100. mm
-/det/setSlits false
-/det/setDetectorSize 141.421356 mm
-/det/setDetectorThickness 0.3 mm
-/det/setDetectorSampleDistance 150.15 mm
+{GEOMETRY.geant4_detector_commands()}
 /phys/SelectPhysicsList empenelopeMI
 /run/setCut 0.01 mm
 /run/verbose 0
@@ -81,11 +77,7 @@ def geant4_macro(output: Path, photons: int, run_index: int) -> str:
 /gps/particle gamma
 /gps/ene/type Mono
 /gps/ene/mono {ENERGY_KEV:.7f} keV
-/gps/pos/type Plane
-/gps/pos/shape Circle
-/gps/pos/radius 0.05 mm
-/gps/pos/centre 0. 0. 49.9 mm
-/gps/direction 0 0 1
+{GEOMETRY.geant4_source_commands()}
 /run/printProgress 50000000
 /run/beamOn {photons}
 """
@@ -163,8 +155,8 @@ def run_metal(scratch: Path, photons: int, index: int,
     # Each Philox counter contains the photon history index and draw-block
     # number; each repetition receives a distinct key.
     seed = metal_seed(photons, index)
-    command = [str(METAL), str(photons), "100", "100", "50", "0.1", "0.05",
-               "1000000000", "1", "1", "1", "1", str(seed), str(table),
+    command = [str(METAL), str(photons), *GEOMETRY.metal_arguments(),
+               "1", "1", "1", "1", str(seed), str(table),
                str(WATER_FF), str(raw)]
     started = time.perf_counter()
     run = subprocess.run(command, text=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
@@ -230,6 +222,16 @@ def profile_parity(cpu_image: np.ndarray, gpu_image: np.ndarray,
 
 def digest(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()[:16]
+
+
+def metal_source_digest() -> str:
+    digest = hashlib.sha256()
+    paths = sorted((HERE / "Metal").glob("*.metal"))
+    paths += sorted((HERE / "Sources" / "MetalTransport").glob("*.swift"))
+    for path in paths:
+        digest.update(path.relative_to(HERE).as_posix().encode())
+        digest.update(path.read_bytes())
+    return digest.hexdigest()[:16]
 
 
 def main() -> None:
@@ -317,7 +319,7 @@ def main() -> None:
         "profile_parity": {key: value for key, value in parity.items()
                            if not isinstance(value, np.ndarray)},
         "geant4_source_sha256_16": digest(SOURCE / "src" / "SAXSEventAction.cc"),
-        "metal_source_sha256_16": digest(HERE / "multi_transport.swift"),
+        "metal_source_sha256_16": metal_source_digest(),
         "metal_physics_sha256_16": digest(args.metal_physics),
         "metal_physics_path": str(args.metal_physics),
         "roots_created": 0, "elapsed_seconds": time.perf_counter() - started,

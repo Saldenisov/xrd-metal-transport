@@ -28,8 +28,8 @@ def test_geometry_and_parallel_source() -> None:
     assert MANIFEST["front_face_to_detector_mm"] == 200.0
     assert MANIFEST["sample_lateral_mm"] == 120.0
     macro = geant4_macro(Path("/tmp/water_unit_test"), 1000, 0)
-    assert "/det/setPhantomDiameter 100. mm" in macro
-    assert "/det/setPhantomHeight 120. mm" in macro
+    assert "/det/setPhantomDiameter 100 mm" in macro
+    assert "/det/setPhantomHeight 120 mm" in macro
     assert "/det/setDetectorSampleDistance 150.15 mm" in macro
     assert "/gps/pos/radius 0.05 mm" in macro
     assert "/gps/direction 0 0 1" in macro

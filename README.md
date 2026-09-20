@@ -16,12 +16,14 @@ the Geant4 toolkit; see [provenance and license](docs/PROVENANCE.md).
 | Path | Role |
 |---|---|
 | `tutorial/saxs_keele/src`, `include` | Geant4 SAXS example with finite-box geometry, image-only scoring and physics-table export |
-| `tutorial/saxs_keele/gpu_transport/multi_transport.metal` | Photon transport, Rayleigh sampling, Penelope Compton final state and Philox RNG |
-| `tutorial/saxs_keele/gpu_transport/multi_transport.swift` | Input validation, form-factor CDF preparation, Metal dispatch and detector tally |
+| `tutorial/saxs_keele/gpu_transport/Metal` | Short Metal modules for RNG, finite-box geometry, scattering physics and transport kernels |
+| `tutorial/saxs_keele/gpu_transport/Sources/MetalTransport` | Swift input validation, table preparation, device selection, dispatch and output reduction |
+| `tutorial/saxs_keele/gpu_transport/geometry.py` | One supported slab-geometry specification that emits matched Geant4 and Metal inputs |
+| `tutorial/saxs_keele/gpu_transport/metal_radial.py` | Exact sparse pyFAI operator export and optional GPU-side radial reduction |
 | `tutorial/saxs_keele/prepare_keele_ff.py` | Converts the six-column component table to Geant4 MI form factors |
 | `tutorial/saxs_keele/gpu_transport/results` | Small physics fixtures and historical JSON validation records; no raw histories or detector images |
 
-Read [physics and units](docs/PHYSICS.md), [reproducible examples](docs/EXAMPLES.md),
+Read [architecture](docs/ARCHITECTURE.md), [physics and units](docs/PHYSICS.md), [reproducible examples](docs/EXAMPLES.md),
 and [validation with unresolved differences](docs/VALIDATION.md) before using
 the output as a reference.
 

@@ -9,6 +9,31 @@ intermediate physics implementations and are intentionally not release claims.
 
 # Keele photon transport on Apple Metal
 
+## Modular transport and GPU radial reduction (2026-09-20)
+
+The 829-line notebook prototype combined an embedded Metal shader, device
+selection, physics-table construction, transport dispatch and radial reduction
+in one Swift file. The maintained repository now separates those concerns into
+four Metal files and six Swift files. The numerical transport path was checked
+bit for bit against the previous executable for 200,000 fixed-seed histories.
+
+The notebook's multi-device selection and sparse GPU radial reducer were
+retained. A shared `SlabDetectorGeometry` now emits matched inputs for Geant4
+and Metal validation runs. This removes duplicated dimensions but does not
+make Metal execute arbitrary Geant4 geometry. A 200,000-history check found
+identical channel counts between image and radial modes, and exact agreement
+between GPU radial sums and multiplication of the serialized sparse operator
+by the full detector image.
+
+On the M4 Pro, one fixed-seed 5-million-history water run took 0.1261 s in
+image mode and 0.0505 s in radial mode, including process startup and shader
+compilation (2.50-fold wall-time reduction in this single run). The transferred
+result decreased from a 4,000,000-byte detector image to 1,600 bytes for 200
+double-precision radial sums. The maximum difference from multiplying the
+full image by the same pyFAI operator was 1.96 × 10⁻⁶ counts (7.18 × 10⁻⁸
+relative). These timings describe this hardware and geometry; they are not a
+general performance guarantee.
+
 ## Independent 100 mm water parity benchmark
 
 `validate_water_100mm_cpu_metal.py` runs independent Geant4 CPU and Apple
@@ -87,7 +112,7 @@ to a 1D profile to avoid moving a 1000² image for each inverse-model trial.
 
 ### Penelope shell/Doppler port (2026-09-17)
 
-The current `multi_transport.swift` now samples shell-aware Compton angle and outgoing
+The Metal scattering module now samples shell-aware Compton angle and outgoing
 energy using the Penelope-2008 algorithm in Geant4's
 `G4PenelopeComptonModel.cc`, adapted to Metal's float arithmetic and
 independent Philox photon histories. `SAXSRunAction.cc` exports the *actual*
@@ -214,12 +239,12 @@ The CPU/GPU physics parity caveat above remains despite this RNG fix.
 The [Random123 Philox4x32-10 reference](https://github.com/DEShawResearch/random123)
 has official known-answer vectors. `philox_metal_kat.swift` passes all three
 vectors bit-for-bit, and the same counter transformation is now integrated
-into `multi_transport.swift`. The vector test checks RNG correctness, not
+into `Metal/Random.metal`. The vector test checks RNG correctness, not
 Rayleigh/Compton physics.
 
 ## Multi-collision forward model (experimental)
 
-`multi_transport.swift` launches one independent photon history per Metal
+The `transport` kernel launches one independent photon history per Metal
 thread. For a homogeneous 50 mm slab it transports repeated sample Rayleigh
 and Compton interactions, energy-dependent photoelectric attenuation, air,
 and an ideal 1000 × 1000 detector. Rayleigh angles come from the trial Keele
@@ -258,7 +283,7 @@ colleague file, 1:0.525:0.276 on CPU and 1:0.525:0.275 on GPU.
 Reproduce from the Keele notebook directory with `eosdx13`:
 
 ```sh
-swiftc -O -framework Metal geant4-xray-diffraction/tutorial/saxs_keele/gpu_transport/multi_transport.swift -o geant4-xray-diffraction/tutorial/saxs_keele/gpu_transport/multi_transport
+./scripts/build.sh
 /opt/homebrew/Caskroom/miniconda/base/envs/eosdx13/bin/python geant4-xray-diffraction/tutorial/saxs_keele/gpu_transport/prepare_multi_physics.py --photons 1000000 --output geant4-xray-diffraction/tutorial/saxs_keele/gpu_transport/results/multi_physics_g50.json
 /opt/homebrew/Caskroom/miniconda/base/envs/eosdx13/bin/python geant4-xray-diffraction/tutorial/saxs_keele/gpu_transport/run_multi_transport.py --photons 200000000
 /opt/homebrew/Caskroom/miniconda/base/envs/eosdx13/bin/python geant4-xray-diffraction/tutorial/saxs_keele/gpu_transport/validate_multi_transport.py --photons 20000000 --threads 8

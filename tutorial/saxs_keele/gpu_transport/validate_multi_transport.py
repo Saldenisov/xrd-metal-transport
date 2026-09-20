@@ -22,6 +22,7 @@ from scipy.sparse import csr_matrix, diags
 from xrd_preprocessing.azimuthal import _integrator_from_dataframe
 
 from benchmark_g4 import BUILD, DEFAULT_FF, G4_BINARY, HERE, make_macro
+from geometry import SlabDetectorGeometry
 from validate_water_100mm_cpu_metal import (CHANNELS, read_g4_channels,
                                               read_g4_image, profile_parity)
 sys.path.insert(0, str(HERE.parent))
@@ -75,6 +76,12 @@ def main() -> None:
     with tempfile.TemporaryDirectory(prefix="keele_multi_validate_") as temporary:
         stem = Path(temporary) / "g50"
         macro = stem.with_suffix(".mac")
+        geometry = SlabDetectorGeometry(
+            sample_thickness_mm=50.0, sample_lateral_mm=120.0,
+            downstream_air_mm=110.0, detector_pixels=1000,
+            pixel_pitch_mm=0.1, beam_radius_mm=0.1,
+            focus_from_entry_mm=320.0,
+        )
         case = dict(thickness_mm="50", gap_mm="110", beam_radius_mm="0.1",
                     focus_from_entry_mm="320", density_scale="1", case="0")
         macro_text = make_macro(case, args.photons, stem)
@@ -129,8 +136,8 @@ def main() -> None:
             raise AssertionError("Geant4 image/channel counts differ")
 
         raw = Path(temporary) / "metal_image.raw"
-        command = [str(HERE / "multi_transport"), str(args.photons), "50", "110",
-                   "50", "0.1", "0.1", "320", "1", "1", "1", "1", "42091",
+        command = [str(HERE / "multi_transport"), str(args.photons),
+                   *geometry.metal_arguments(), "1", "1", "1", "1", "42091",
                    str(physics_path), str(ff_path), str(raw)]
         start = time.perf_counter()
         metal = subprocess.run(command, text=True, stdout=subprocess.PIPE,

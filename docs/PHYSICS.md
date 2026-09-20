@@ -14,6 +14,9 @@ incoherent Compton scattering and coherent Rayleigh scattering. The implemented
 Metal geometry is one homogeneous rectangular sample box in air with an ideal
 planar photon-entrance detector. Geant4 remains the reference implementation
 for this comparison, not an oracle for unmeasured sample properties.
+`geometry.py` supplies the same dimensions to both engines. Geant4 constructs
+its own solids and Metal navigates its own finite box; no general Geant4 solid
+or navigation state is executed on the GPU.
 
 ## Molecular-interference form factors
 
@@ -53,12 +56,12 @@ It is a testable material approximation, not a universal mixing law.
    Rayleigh cross sections at six energy nodes, plus the actual Penelope
    oscillator strength, ionization energy and Hartree-factor triples for
    sample and air. `prepare_multi_physics.py` stores them in JSON.
-2. `multi_transport.swift` validates the JSON and forms a 4096-bin angular
+2. `Sources/MetalTransport/` validates the JSON and forms a 4096-bin angular
    Rayleigh CDF for every energy node. Its sample law is proportional to
    `(1 + cos²θ) × F(q)² × sinθ`. The air law uses the nitrogen and oxygen
    atomic form-factor tables from `G4LEDATA`. Metal interpolates cross
    sections logarithmically between nodes after Compton energy loss.
-3. `multi_transport.metal` assigns one Philox4x32-10 stream to each photon
+3. `Metal/` assigns one Philox4x32-10 stream to each photon
    history. It draws exponential flights, tests the six faces of the sample
    box, permits exit and re-entry, and continues transport in air until
    absorption, world exit or detector entrance.
@@ -72,6 +75,9 @@ It is a testable material approximation, not a universal mixing law.
    Rayleigh, multiple Rayleigh or any Compton. Air interactions are tracked
    separately. The CPU and GPU images are integrated by the same
    XRD-preprocessing/pyFAI operation and geometry.
+6. In radial-output mode, the same sparse pyFAI pixel-splitting operator is
+   applied on the GPU. Each pixel contributes to at most three bins. The
+   image-output path remains available for detector-level validation.
 
 Metal uses an angular CDF with linear form-factor interpolation, while Geant4
 MI uses RITA sampling and interpolation in log(q²)/log(F²). This algorithmic

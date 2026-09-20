@@ -18,6 +18,7 @@ from pathlib import Path
 import numpy as np
 
 from prepare_keele_ff import COMPONENTS, mixture_material
+from geometry import SlabDetectorGeometry
 if __package__:
     from .benchmark_g4 import BUILD, G4_BINARY, make_macro
 else:
@@ -141,14 +142,8 @@ def run_trial_metal(*, label: str, miff: np.ndarray,
                     transport_fractions: dict[str, float], manifest: dict,
                     photons: int, seeds: tuple[int, int], output_dir: Path) -> np.ndarray:
     reference_path = physics_reference_path(float(manifest["energy_kev"]))
-    thickness = float(manifest["sample_thickness_mm"])
-    gap = float(manifest["front_face_to_detector_mm"]) - thickness
-    pixels = int(manifest["detector_pixels"])
-    pitch = float(manifest["pixel_pitch_um"]) * 1e-3
-    half = pixels * pitch / 2
-    radius = float(manifest["source_diameter_um"]) * 5e-4
-    entry_z = float(manifest["source_plane_z_mm"]) + 0.1
-    focus = float(manifest["focus_point_z_mm"]) - entry_z
+    geometry = SlabDetectorGeometry.from_manifest(manifest)
+    pixels = geometry.detector_pixels
     physics = trial_physics(miff, transport_fractions, reference_path)
     physics["sample_lateral_mm"] = float(manifest.get("sample_lateral_mm", 120.0))
     with tempfile.TemporaryDirectory(prefix="keele_metal_trial_") as temporary:
@@ -158,8 +153,8 @@ def run_trial_metal(*, label: str, miff: np.ndarray,
         raw = scratch / "image.raw"
         np.savetxt(ff, miff, fmt="%.12e")
         table.write_text(json.dumps(physics, separators=(",", ":")))
-        command = [str(HERE / "multi_transport"), str(photons), str(thickness), str(gap),
-                   str(half), str(pitch), str(radius), str(focus), "1", "1", "1", "1",
+        command = [str(HERE / "multi_transport"), str(photons),
+                   *geometry.metal_arguments(), "1", "1", "1", "1",
                    str(seeds[0]), str(table), str(ff), str(raw)]
         summary = json.loads(subprocess.check_output(command, text=True))
         if summary["interaction_cap_count"]:
