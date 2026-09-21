@@ -21,10 +21,11 @@ The reference chain has three distinct layers:
    example used here.
 3. This project modifies that example as a Geant4 11.4.2 CPU reference, then
    independently reimplements the supported transport path in Metal Shading
-   Language and Swift for Apple GPUs.
+   Language and Swift for Apple GPUs. The same restricted equations are also
+   implemented in CUDA for NVIDIA GPUs and CUDA-to-Metal compiler checks.
 
 The scientific scattering model, the adapted reference application and the
-Metal implementation are therefore related but are not the same software.
+Metal/CUDA implementations are therefore related but are not the same software.
 Geant4 supplies the reference physics procedures and exported tables. The
 Metal kernel reproduces only the explicitly documented subset and remains an
 experimental implementation requiring comparison against Geant4.
@@ -34,6 +35,8 @@ experimental implementation requiring comparison against Geant4.
 | `tutorial/saxs_keele/include`, `src`, `saxs.cc` | Geant4 11.4.2 `examples/extended/exoticphysics/saxs`; geometry, event scoring, image-only CSV mode, cross-section/oscillator export and Keele material paths were added or changed locally. Unchanged example files retain their Geant4 headers. |
 | `tutorial/saxs_keele/prepare_keele_ff.py` and material macros | Project adaptation of the Geant4 MI input convention to Keele water/fat/collagen tables. |
 | `gpu_transport/Metal` | Original Metal implementation for this project. Its shell-aware Compton final-state equations were translated from [Geant4 11.4.2 `G4PenelopeComptonModel.cc`](https://github.com/Geant4/geant4/blob/v11.4.2/source/processes/electromagnetic/lowenergy/src/G4PenelopeComptonModel.cc). Its parallel independent-history architecture was informed by [FDA MC-GPU v1.3](https://github.com/DIDSR/MCGPU), but the MC-GPU CUDA source and its PENELOPE-2006 shell tables were not copied. Molecular Rayleigh uses the Keele MIFF, not MC-GPU's atomic tables. |
+| `gpu_transport/CUDA` | Original CUDA expression of the same restricted project model. It follows the native Metal equations and packed output so the two GPU kernels can be checked with identical Philox counters. It does not contain Geant4, AdePT, G4HepEm or MC-GPU source. The Penelope Compton attribution and limits above apply equally to this implementation. |
+| CuMetal development dependency | [CuMetal](https://github.com/Lulzx/cuda-metal) translates the CUDA device source to MSL for the optional Apple-silicon check. It is an external Apache-2.0 project and is not vendored or redistributed here. The maintained check used CuMetal 0.5.0, commit `fee009f`. |
 | Philox4x32-10 implementation | Algorithm and known-answer vectors from [Random123](https://github.com/DEShawResearch/random123); see `philox_metal_kat.swift`. |
 | Radial profile integration | External [XRD-preprocessing](https://github.com/Eos-Dx/XRD-preprocessing) and [pyFAI](https://github.com/silx-kit/pyFAI), called consistently for both detector images. |
 | `data/xrd_components.txt` and `tutorial/saxs_keele/data/keele_*.dat` | Keele project input and derived MIFF files used for scientific reproduction. The repository grants no separate reuse license for these tables; consult the owner before redistribution. |
@@ -47,9 +50,9 @@ diff -ru /path/to/geant4-11.4.2/examples/extended/exoticphysics/saxs \
   tutorial/saxs_keele
 ```
 
-The additional GPU implementation is **not** Geant4 running on a GPU.
-The Geant4 reference and Metal implementation independently sample histories
-from related, but not identical, numerical physics procedures.
+The additional GPU implementations are **not** Geant4 running on a GPU.
+The Geant4 reference and Metal/CUDA implementations sample histories from
+related, but not identical, numerical physics procedures.
 
 ## Scientific references
 

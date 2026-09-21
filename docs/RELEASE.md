@@ -5,7 +5,7 @@ included examples. Public visibility does not itself grant a reuse license.
 
 - Copied and adapted Geant4 SAXS files retain their headers and are distributed
   under `GEANT4_LICENSE` with the required attribution.
-- No separate license is granted for original Swift, Metal and Python files.
+- No separate license is granted for original Swift, Metal, CUDA/C++ and Python files.
 - No separate license is granted for `data/xrd_components.txt` or derived
   `keele_*.dat` molecular-interference form-factor tables. Their scientific
   provenance is documented in `PROVENANCE.md`. Contact the repository owner

@@ -17,6 +17,7 @@ alone. Fresh runs use the scripts in [EXAMPLES.md](EXAMPLES.md).
 | Full water transport | 100 mm thick, 120 × 120 mm box; 22.0220601 keV; 200 M incident photons per engine; independent seeds | 200-bin full-covariance profile χ²/ν = 0.947, p = 0.693; sample direct/single-Rayleigh/multiple-Rayleigh/Compton differences 0.18/1.09/0.12/−1.29σ | Profile and channels are statistically compatible in this run. It lacks precision to exclude a ≈0.23% direct-channel offset. |
 | Full water transport, retained high-statistics reference | 10 × 200 M Geant4 histories versus 10 × 200 M Metal histories | Direct Metal −0.229%, z = −2.74; Compton −0.290%, z = −1.25 | Full channel parity remains unresolved. The old CPU image was discarded, so no formal full-covariance profile p-value is claimed for this pairing. |
 | Changed material | 45/45/10 water/fat/collagen by mass; 50 mm box; 22.162917 keV; 20 M photons per engine | 256-bin profile χ²/ν = 1.061, p = 0.242; four channel differences within 2σ; q = 2–28 nm⁻¹ relative RMS = 5.75% | Agreement at tested count and geometry; not a proof for every mixture or thickness. |
+| CUDA-to-Metal compiler check | g50, 50 mm box, 22.162917 keV; identical Philox seed; 10 M histories; CuMetal 0.5.0 on M4 Pro | 196 detector pixels differ by one count; detector L1 difference 0.0193%; event-category difference `[0, 0, 0, −8, 0, +6, +2, 0]` | CUDA source executes on Apple GPU and closely follows native Metal; table-rounding and compiler effects are not yet separated. It does not validate native NVIDIA execution or Geant4 physics. |
 
 The water setup has a parallel 100 µm diameter circular source, 100 mm air
 after the sample and an ideal 1000² detector with 100 µm pixels. Both images
@@ -45,6 +46,29 @@ the reference specifies neither pixel geometry, mask nor incident flux.
 Its absolute scale is therefore undetermined. The joblib itself is not
 redistributed. The [summary](../tutorial/saxs_keele/gpu_transport/results/colleague_water_cpu_gpu_50m/summary.json)
 records the assumptions and profile metrics.
+
+## CUDA-to-Metal same-seed check
+
+The CUDA source was translated by CuMetal 0.5.0 at commit `fee009f` and
+executed on the same Apple M4 Pro as native Metal. Both kernels used seed
+20260917, identical Philox history counters, the g50 50 mm finite box, 110 mm
+downstream air and the frozen 22.162917 keV shell table.
+
+The first 1,000 histories produced bit-for-bit identical detector images and
+event classes. At 10,000,000 histories, native Metal detected 1,015,960 photons
+and CUDA-to-Metal detected 1,015,952. A total of 196 pixels differed, every pixel
+difference had magnitude one, and the detector-image L1 difference was
+196/1,015,960 = 0.0193%. Photoelectric, escape and cap categories remain explicit
+in the saved record, so detector agreement is not hiding lost histories.
+
+The comparison uses identical random streams intentionally: it detects small
+numerical changes in branch decisions. Python and Swift independently build the
+float32 Rayleigh CDFs, so the current test combines table-rounding and compiler
+effects rather than assigning the 23 differences to one cause. Geant4
+validation continues to use independent histories because statistical
+agreement with the reference physics is a different question. The complete record is
+[`cuda_cumetal_validation_10m.json`](../tutorial/saxs_keele/gpu_transport/results/cuda_cumetal_validation_10m.json),
+and the reproducing command is documented in [CUDA.md](CUDA.md).
 
 ## Published 100-million-history composition suite
 

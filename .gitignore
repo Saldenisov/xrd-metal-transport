@@ -18,4 +18,7 @@ __pycache__/
 !examples/xrd_suite/results_100m/*.png
 tutorial/saxs_keele/gpu_transport/multi_transport
 tutorial/saxs_keele/gpu_transport/single_rayleigh
+tutorial/saxs_keele/gpu_transport/cuda_transport
+tutorial/saxs_keele/gpu_transport/cumetal_transport
+tutorial/saxs_keele/gpu_transport/xrd_transport.cumetal.metal*
 tutorial/saxs_keele/*.out

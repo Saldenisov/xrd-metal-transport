@@ -85,7 +85,31 @@ The measured acceleration has a direct computational explanation:
 
 These choices accelerate the specified forward problem by reducing generality.
 They do not imply that the full Geant4 physics and geometry stack has been
-ported to Metal.
+ported to either GPU backend.
+
+## CUDA-to-Metal diagnostic
+
+The CUDA backend has one compiler check on the recorded Apple M4 Pro host. For
+10 million g50 histories, CuMetal 0.5.0 required 3.914 s for synchronized
+kernel launches after a discarded compilation warm-up. Native Metal reported
+0.0460 s of GPU time, giving a diagnostic ratio of 85.1. CuMetal GPU tracing
+confirmed the same order of kernel runtime. The intervals are not perfectly
+symmetric because CuMetal uses synchronized host wall time and native Metal
+uses command-buffer GPU timestamps.
+
+Complete timed transport was 4.004 s for CuMetal and 0.133 s for native Metal,
+a ratio of 30.2. The translated MSL is functionally close but inefficient for
+this branch-heavy transport kernel. This confirms the platform choice: native
+Metal remains the maintained performance path on Apple silicon, while the
+CuMetal run checks common CUDA source behavior.
+
+No NVIDIA device was available on this host. Native CUDA speedup, kernel time
+and cross-platform reproducibility remain unmeasured; they must be reported
+from an NVIDIA system with GPU, driver, CUDA toolkit, compiler flags and output
+mode recorded. CuMetal timing must not be presented as native CUDA timing.
+
+The record is
+[`cuda_cumetal_validation_10m.json`](../tutorial/saxs_keele/gpu_transport/results/cuda_cumetal_validation_10m.json).
 
 ## Factors that change the ratio
 
@@ -96,6 +120,8 @@ ported to Metal.
 - full detector image versus GPU radial reduction;
 - text, compressed or binary output and filesystem performance;
 - additional geometry, detector response or secondary-particle physics.
+- backend and compiler: native Metal, native CUDA and CUDA translated by
+  CuMetal have different startup, memory-transfer and math behavior.
 
 Performance and physical agreement are separate tests. A faster run is useful
 only within the regime where the Metal result remains compatible with the

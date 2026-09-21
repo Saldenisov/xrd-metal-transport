@@ -1,0 +1,80 @@
+{
+  "absolute_count_difference": 23,
+  "class_difference": [
+    0,
+    0,
+    0,
+    -1,
+    0,
+    3,
+    -2,
+    0
+  ],
+  "cuda_cumetal": {
+    "air_interaction_hits": 126,
+    "backend": "cuda-cumetal",
+    "classes": [
+      83485,
+      12298,
+      1006,
+      5330,
+      0,
+      794706,
+      103175,
+      0
+    ],
+    "counts_on_detector": 102119,
+    "detector_pixels": 1000,
+    "device": "Apple M4 Pro",
+    "interaction_cap_count": 0,
+    "output_mode": "detector_image",
+    "photons": 1000000,
+    "physics_scope": "G4 XS + sample MIFF and Air IAM Rayleigh + Penelope-2008 shell/Doppler Compton; Philox4x32-10; no fluorescence or detector response",
+    "seconds_gpu_kernel": 0.4104085,
+    "seconds_total": 0.419527959
+  },
+  "detector_l1_fraction": 0.00022522522522522523,
+  "differing_pixels": 23,
+  "exact_image_equal": false,
+  "form_factor": "tutorial/saxs_keele/data/keele_breast_g50.dat",
+  "geometry": {
+    "beam_radius_mm": 0.1,
+    "detector_half_mm": 50.0,
+    "focus_from_entry_mm": 320.0,
+    "gap_mm": 110.0,
+    "pixel_pitch_mm": 0.1,
+    "thickness_mm": 50.0
+  },
+  "kernel_time_ratio_cumetal_over_metal": 64.00631640271702,
+  "kernel_timing_note": "CuMetal uses synchronized host wall time after an MSL warm-up; native Metal uses command-buffer GPU timestamps",
+  "max_pixel_difference": 1,
+  "native_metal": {
+    "air_interaction_hits": 126,
+    "classes": [
+      83485,
+      12298,
+      1006,
+      5331,
+      0,
+      794703,
+      103177,
+      0
+    ],
+    "counts_on_detector": 102120,
+    "detector_pixels": 1000,
+    "direct_count": 0,
+    "interaction_cap_count": 0,
+    "metal_device_count": 1,
+    "metal_device_index": 0,
+    "metal_device_name": "Apple M4 Pro",
+    "output_mode": "detector_image",
+    "photons": 1000000,
+    "physics_scope": "G4 XS + sample MIFF and Air IAM Rayleigh + Penelope-2008 shell/Doppler Compton; Philox4x32-10; no fluorescence or detector response",
+    "radial_bins": 0,
+    "seconds_gpu_kernel": 0.006411999987903982,
+    "seconds_total": 0.01800394058227539
+  },
+  "photons": 1000000,
+  "physics": "tutorial/saxs_keele/gpu_transport/results/multi_transport/g50_22p163_shell_joint.json",
+  "seed": 20260917
+}

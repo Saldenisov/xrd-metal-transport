@@ -7,16 +7,16 @@ scattering law appears after photon attenuation, repeated scattering, finite
 sample geometry, air transport and detector integration. It does **not** infer
 atomic coordinates from a diffraction curve. This distinction matters because
 the input form factor already contains the nanoscale structure; the Geant4 or
-Metal geometry describes millimetre-scale sample and instrument boundaries.
+GPU geometry describes millimetre-scale sample and instrument boundaries.
 
-Both engines propagate X-ray photons through photoelectric absorption,
+The engines propagate X-ray photons through photoelectric absorption,
 incoherent Compton scattering and coherent Rayleigh scattering. The implemented
-Metal geometry is one homogeneous rectangular sample box in air with an ideal
+GPU geometry is one homogeneous rectangular sample box in air with an ideal
 planar photon-entrance detector. Geant4 remains the reference implementation
 for this comparison, not an oracle for unmeasured sample properties.
-`geometry.py` supplies the same dimensions to both engines. Geant4 constructs
-its own solids and Metal navigates its own finite box; no general Geant4 solid
-or navigation state is executed on the GPU.
+`geometry.py` supplies the same dimensions to each engine. Geant4 constructs
+its own solids, while Metal and CUDA navigate their own finite boxes; no general
+Geant4 solid or navigation state is executed on the GPU.
 
 ## Source of the reference physics
 
@@ -30,7 +30,7 @@ Gambaccini and Taibi. Full references are listed in
 [PROVENANCE.md](PROVENANCE.md).
 
 Geant4 and G4EMLOW provide the reference electromagnetic models, atomic data
-and the Penelope shell tables used in this project. The Metal kernel does not
+and the Penelope shell tables used in this project. The GPU kernels do not
 call these libraries at runtime. It consumes tables exported from the actual
 Geant4 material setup and independently implements the documented transport
 subset. Agreement must therefore be established by numerical comparison; it
@@ -68,7 +68,7 @@ S_mix(q) = Σᵢ aᵢ Sᵢ(q),       Σᵢ aᵢ = 1
 `S` denotes `F²/W` here. This rule omits inter-component interference terms.
 It is a testable material approximation, not a universal mixing law.
 
-## Metal transport mapping
+## GPU transport mapping
 
 1. `SAXSRunAction.cc` exports Geant4 macroscopic photoelectric, Compton and
    Rayleigh cross sections at six energy nodes, plus the actual Penelope
@@ -77,14 +77,15 @@ It is a testable material approximation, not a universal mixing law.
 2. `Sources/MetalTransport/` validates the JSON and forms a 4096-bin angular
    Rayleigh CDF for every energy node. Its sample law is proportional to
    `(1 + cos²θ) × F(q)² × sinθ`. The air law uses the nitrogen and oxygen
-   atomic form-factor tables from `G4LEDATA`. Metal interpolates cross
+   atomic form-factor tables from `G4LEDATA`. `prepare_cuda_input.py` builds the
+   corresponding float tables for CUDA. Both GPU kernels interpolate cross
    sections logarithmically between nodes after Compton energy loss.
-3. `Metal/` assigns one Philox4x32-10 stream to each photon
+3. `Metal/` and `CUDA/` assign one Philox4x32-10 stream to each photon
    history. It draws exponential flights, tests the six faces of the sample
    box, permits exit and re-entry, and continues transport in air until
    absorption, world exit or detector entrance.
 4. For Compton scattering, the kernel samples shell-aware angle and outgoing
-   energy with a Metal translation of the Penelope-2008 final-state algorithm
+   energy with GPU translations of the Penelope-2008 final-state algorithm
    in Geant4 11.4.2 `G4PenelopeComptonModel.cc`. The older calibrated angular
    CDF and free-electron shift remain a fallback for legacy fixtures without
    shell tables. The current examples use shell tables.
@@ -93,11 +94,11 @@ It is a testable material approximation, not a universal mixing law.
    Rayleigh, multiple Rayleigh or any Compton. Air interactions are tracked
    separately. The CPU and GPU images are integrated by the same
    XRD-preprocessing/pyFAI operation and geometry.
-6. In radial-output mode, the same sparse pyFAI pixel-splitting operator is
+6. In native-Metal radial-output mode, the same sparse pyFAI pixel-splitting operator is
    applied on the GPU. Each pixel contributes to at most three bins. The
    image-output path remains available for detector-level validation.
 
-Metal uses an angular CDF with linear form-factor interpolation, while Geant4
+The GPU implementations use an angular CDF with linear form-factor interpolation, while Geant4
 MI uses RITA sampling and interpolation in log(q²)/log(F²). This algorithmic
 difference is a plausible source of remaining multi-scatter residuals, but
 the existing tests do not isolate it. The six-node cross-section table is
@@ -127,8 +128,8 @@ independently calibrated absolute intensity.
 ## Limits
 
 - The MIFF is isotropic: oriented collagen anisotropy is outside this model.
-- Metal omits electron transport, fluorescence, voxels and detector response.
+- Metal and CUDA omit electron transport, fluorescence, voxels and detector response.
 - The component mixture omits interfacial cross terms.
 - The source is monochromatic and the detector ideal in the saved parity runs.
-- Geant4/Metal channel equivalence remains unproven at multi-billion-history
+- Geant4/GPU channel equivalence remains unproven at multi-billion-history
   precision; see [validation](VALIDATION.md).

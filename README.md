@@ -1,13 +1,14 @@
-# XRD photon transport on Apple Metal
+# XRD photon transport on Apple Metal and NVIDIA CUDA
 
 Experimental research prototype for **X-ray diffraction from homogeneous
-water, fat and collagen mixtures** on Apple silicon. A Geant4 11.4.2 SAXS
+water, fat and collagen mixtures** on Apple silicon and NVIDIA GPUs. A Geant4 11.4.2 SAXS
 application provides the independent CPU reference and exports material cross
 sections and Penelope Compton shell tables. The supported transport subset was
-independently rewritten in Metal Shading Language, with Swift host code, for a
-Mac GPU. It transports independent photon histories through a finite sample
-box, air and an ideal pixel detector. The radial signal is analyzed by the same
-XRD-preprocessing/pyFAI path on both backends.
+independently rewritten in Metal Shading Language for Apple GPUs and in CUDA
+for NVIDIA GPUs. The CUDA source can also be translated to Metal by CuMetal as
+an experimental cross-compiler check. Each GPU backend transports independent
+photon histories through a finite sample box, air and an ideal pixel detector.
+The radial signal is analyzed by the same XRD-preprocessing/pyFAI path.
 
 This product includes software developed by Members of the Geant4 Collaboration
 (http://cern.ch/geant4). The adapted SAXS example remains distinguishable from
@@ -20,12 +21,15 @@ the Geant4 toolkit; see [provenance and license](docs/PROVENANCE.md).
 | `tutorial/saxs_keele/src`, `include` | Geant4 SAXS example with finite-box geometry, image-only scoring and physics-table export |
 | `tutorial/saxs_keele/gpu_transport/Metal` | Short Metal modules for RNG, finite-box geometry, scattering physics and transport kernels |
 | `tutorial/saxs_keele/gpu_transport/Sources/MetalTransport` | Swift input validation, table preparation, device selection, dispatch and output reduction |
-| `tutorial/saxs_keele/gpu_transport/geometry.py` | One supported slab-geometry specification that emits matched Geant4 and Metal inputs |
+| `tutorial/saxs_keele/gpu_transport/CUDA` | Short CUDA modules plus native CUDA and CUDA-to-Metal host launchers |
+| `tutorial/saxs_keele/gpu_transport/prepare_cuda_input.py` | Shared, validated CUDA/CuMetal input-table builder |
+| `tutorial/saxs_keele/gpu_transport/geometry.py` | One supported slab-geometry specification that emits matched Geant4 and GPU inputs |
 | `tutorial/saxs_keele/gpu_transport/metal_radial.py` | Exact sparse pyFAI operator export and optional GPU-side radial reduction |
 | `tutorial/saxs_keele/prepare_keele_ff.py` | Converts the six-column component table to Geant4 MI form factors |
 | `tutorial/saxs_keele/gpu_transport/results` | Small physics fixtures and historical JSON validation records; no raw histories or detector images |
 
 Read [architecture](docs/ARCHITECTURE.md), [physics and units](docs/PHYSICS.md),
+[CUDA and CUDA-to-Metal](docs/CUDA.md),
 [scientific and software provenance](docs/PROVENANCE.md),
 [reproducible examples](docs/EXAMPLES.md), [performance](docs/PERFORMANCE.md),
 and [validation with unresolved differences](docs/VALIDATION.md) before using
@@ -42,6 +46,12 @@ implementation and extended data set by Paternò, Cardarelli, Contillo,
 Gambaccini and Taibi (2018) and Paternò, Cardarelli, Gambaccini and Taibi
 (2020). Exact references and source links are listed in
 [PROVENANCE.md](docs/PROVENANCE.md).
+
+The CUDA implementation is a second source-level implementation of this same
+restricted transport model. It is not a CUDA build of Geant4. Native Metal
+remains the primary macOS path; native CUDA is intended for NVIDIA GPUs on
+Windows and Linux, while CuMetal provides an experimental same-source check on
+Apple silicon.
 
 This repository adapts the Geant4 example for finite-box transport, detector
 image scoring and export of the cross-section and Penelope oscillator tables
@@ -84,6 +94,15 @@ source /path/to/geant4-install/bin/geant4.sh
 PYTHON=python3 PHOTONS=2000000 THREADS=8 ./scripts/quick_compare.sh
 ```
 
+Optional CUDA builds and the same-seed Metal comparison are documented in
+[`docs/CUDA.md`](docs/CUDA.md). The short Apple silicon check is:
+
+```bash
+export CUMETAL_PREFIX="$(brew --prefix cumetal)"
+./scripts/build_cuda.sh --cumetal-only
+python3 tutorial/saxs_keele/gpu_transport/compare_cuda_metal.py --photons 1000000
+```
+
 The 2-million-photon command is a **smoke comparison**, not a high-precision
 parity claim. The saved large-run records and their exact conditions are in
 [validation](docs/VALIDATION.md). `build/` and generated images are ignored.
@@ -108,8 +127,9 @@ sample molecular-interference form factors, air interactions and an ideal
 entrance-crossing detector. It does not model a voxelized patient, electron
 transport, fluorescence or a measured detector response. The current Metal
 Rayleigh sampler uses a tabulated angular CDF rather than Geant4's RITA
-sampler. High-statistics residuals remain unresolved. No clinical or dose
-equivalence is claimed.
+sampler. CUDA implements the same restricted CDF path and currently returns a
+detector image for shared Python integration. High-statistics residuals remain
+unresolved. No clinical or dose equivalence is claimed.
 
 The repository is public for review and reproduction. The adapted Geant4 files
 remain under the Geant4 Software License. No separate reuse license is granted

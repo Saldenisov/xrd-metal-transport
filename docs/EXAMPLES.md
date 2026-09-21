@@ -113,3 +113,22 @@ repeated inverse-model trials after the operator and detector mask are frozen.
 The reducer is exact for operators with at most three nonzero bin links per
 pixel, matching the tested pyFAI pixel-splitting operator. Its output has been
 checked against multiplication of the same operator by the full Metal image.
+
+## 8. Build and compare the CUDA source on Apple silicon
+
+After installing CuMetal, build the CUDA source as MSL and its macOS launcher:
+
+```bash
+export CUMETAL_PREFIX="$(brew --prefix cumetal)"
+./scripts/build_cuda.sh --cumetal-only
+
+python3 tutorial/saxs_keele/gpu_transport/compare_cuda_metal.py \
+  --photons 1000000 \
+  --output build/cuda-metal-validation.json
+```
+
+This uses the same g50 sample, geometry, seed and detector for native Metal and
+CUDA-to-Metal. It checks event classes and every detector pixel. It is a
+compiler/backend consistency test and does not replace the independent Geant4
+comparison. Native CUDA build and run commands for NVIDIA Windows/Linux hosts
+are in [CUDA.md](CUDA.md).
