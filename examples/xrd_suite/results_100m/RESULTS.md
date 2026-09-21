@@ -1,6 +1,7 @@
 # Geant4 versus Metal: X-ray diffraction examples
 
 Each row compares 100,000,000 independent histories per backend. Profile p-values use the full pyFAI pixel-splitting covariance.
+Figures use solid blue for Geant4 CPU and dashed orange with markers for Metal GPU. Every profile panel reports its measured end-to-end wall-time speedup.
 
 | Case | Water/fat/collagen | Thickness | Geant4 | Metal | Speedup | Profile χ²/ν | p | Figure |
 |---|---:|---:|---:|---:|---:|---:|---:|---|

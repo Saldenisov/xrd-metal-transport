@@ -13,10 +13,6 @@ import tempfile
 import time
 from pathlib import Path
 
-import matplotlib
-
-matplotlib.use("Agg")
-import matplotlib.pyplot as plt
 import numpy as np
 from scipy.sparse import csr_matrix
 from xrd_preprocessing.azimuthal import _integrator_from_dataframe
@@ -31,6 +27,7 @@ from benchmark_g4 import G4_BINARY, make_macro  # noqa: E402
 from check_trial_xs import trial_miff  # noqa: E402
 from geometry import SlabDetectorGeometry  # noqa: E402
 from metal_forward import PHYSICS_22  # noqa: E402
+from plotting import plot_case_comparison  # noqa: E402
 from prepare_keele_ff import mixture_material  # noqa: E402
 from profile_integration import guarded_radial_spec, integrate_image  # noqa: E402
 from validate_water_100mm_cpu_metal import (  # noqa: E402
@@ -255,44 +252,8 @@ def run_metal(geometry: SlabDetectorGeometry, photons: int, seed: int,
     return image, summary, elapsed
 
 
-def _plot_case(output: Path, case: dict, geometry: SlabDetectorGeometry,
-               photons: int, q: np.ndarray, geant4_profile: np.ndarray,
-               metal_profile: np.ndarray, bin_z: np.ndarray,
-               geant4_image: np.ndarray, metal_image: np.ndarray,
-               channel_relative: dict[str, float]) -> None:
-    fig, axes = plt.subplots(2, 2, figsize=(11, 8), constrained_layout=True)
-    extent = (-50, 50, -50, 50)
-    maximum = max(np.percentile(np.log1p(geant4_image), 99.99),
-                  np.percentile(np.log1p(metal_image), 99.99))
-    for axis, image, title in zip(
-        axes[0], (geant4_image, metal_image), ("Geant4 CPU", "Metal GPU")
-    ):
-        axis.imshow(np.log1p(image), origin="lower", extent=extent, cmap="magma",
-                    vmin=0, vmax=maximum)
-        axis.set(xlim=(-25, 25), ylim=(-25, 25), xlabel="x (mm)", ylabel="y (mm)",
-                 title=f"{title}: log(1 + counts)")
-    axes[1, 0].plot(q, geant4_profile / photons, label="Geant4", lw=1.5)
-    axes[1, 0].plot(q, metal_profile / photons, label="Metal", lw=1.0)
-    axes[1, 0].set(xlim=Q_RANGE, yscale="log", xlabel=r"$q$ (nm$^{-1}$)",
-                   ylabel="Azimuthal sum / incident photon")
-    axes[1, 0].legend(frameon=False)
-    axes[1, 1].plot(q, bin_z, lw=0.9, color="#315c8a")
-    axes[1, 1].axhline(0, color="black", lw=0.8)
-    axes[1, 1].axhline(3, color="gray", lw=0.7, ls="--")
-    axes[1, 1].axhline(-3, color="gray", lw=0.7, ls="--")
-    axes[1, 1].set(xlim=Q_RANGE, xlabel=r"$q$ (nm$^{-1}$)",
-                   ylabel=r"Metal $-$ Geant4 / $\sigma$")
-    fractions = case["fractions"]
-    figure_title = (
-        f"{case['name']}: {geometry.sample_thickness_mm:g} mm; "
-        f"water/fat/collagen = {fractions['water']:.3g}/"
-        f"{fractions['fat']:.3g}/{fractions['collagen']:.3g}; "
-        f"{photons:,} photons per backend"
-    )
-    fig.suptitle(figure_title)
-    fig.savefig(output / "detector_comparison.png", dpi=160)
-    plt.close(fig)
-
+def _write_channel_comparison(output: Path,
+                              channel_relative: dict[str, float]) -> None:
     with (output / "channel_comparison.csv").open("w", newline="") as stream:
         writer = csv.writer(stream, lineterminator="\n")
         writer.writerow(("channel", "relative_difference_metal_over_geant4_minus_1"))
@@ -406,10 +367,11 @@ def run_case(case: dict, case_index: int, photons: int, threads: int,
         writer = csv.writer(stream, lineterminator="\n")
         writer.writerow(("q_nm_inv", "geant4_sum", "metal_sum", "bin_z"))
         writer.writerows(zip(q_g4, profile_g4, profile_metal, parity["bin_z"]))
-    _plot_case(
-        output, case, geometry, photons, q_g4, profile_g4, profile_metal,
-        parity["bin_z"], g4_image, metal_image, channel_relative,
+    plot_case_comparison(
+        output, summary, q_g4, profile_g4, profile_metal, parity["bin_z"],
+        g4_image, metal_image,
     )
+    _write_channel_comparison(output, channel_relative)
     if keep_arrays:
         np.savez_compressed(output / "detector_arrays.npz",
                             geant4=g4_image.astype(np.int32),
